@@ -1,0 +1,30 @@
+.navbar-link-container {
+	cursor: pointer;
+	font-size: 20px !important;
+	font-weight: 100;
+	font-family: Quicksand !important;
+}
+
+@media (max-width: 991.98px) {
+	.navbar-link-container,
+	.navbar-link-icon,
+	.navbar-link-text {
+		color: #5e72e4 !important;
+	}
+}
+
+.navbar-toggler {
+	outline-style: none !important;
+}
+
+.brand-icon {
+	max-width: 250px;
+	max-height: 28px;
+}
+
+@media (max-width: 360px) {
+	.brand-icon {
+		max-width: 180px;
+		max-height: 20px;
+	}
+}
