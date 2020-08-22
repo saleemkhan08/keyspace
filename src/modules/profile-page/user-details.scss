@@ -1,0 +1,22 @@
+.show-sm {
+	display: none !important;
+}
+
+.hide-sm {
+	display: flex;
+}
+
+@media (max-width: 768px) {
+	.show-sm {
+		display: flex !important;
+		justify-content: center;
+	}
+
+	.hide-sm {
+		display: none !important;
+	}
+}
+
+.user-details-card-body {
+	height: 300px;
+}

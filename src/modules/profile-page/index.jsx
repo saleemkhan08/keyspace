@@ -13,12 +13,14 @@ import { ROUTES } from 'modules/routes';
 import FullPageLoading from 'components/full-page-loading';
 import { useDispatch } from 'react-redux';
 import Background from 'components/background';
+import UserDetailTabs from './user-details';
 import './profile-page.scss';
 
 const Profile = ({ currentUser }) => {
 	const mainRef = useRef();
 	const dispatch = useDispatch();
 	const [imgLoaded, setImgLoaded] = useState(false);
+
 	const services = [
 		'Cook',
 		'Security',
@@ -35,14 +37,13 @@ const Profile = ({ currentUser }) => {
 	}, []);
 
 	const userData = useDocument(`${USER_COLLECTION}/${currentUser?.uid}`);
-	console.log('SalUserData : ', { currentUser });
+	console.log('SalUserData : ', { currentUser, userData });
 	if (currentUser?.isLoading) {
 		return <FullPageLoading />;
 	}
 	if (!currentUser) {
 		return <Redirect to={ROUTES.INDEX} />;
 	}
-	console.log('SalUserData : ', { userData });
 	return (
 		<>
 			<main className='profile-page' ref={mainRef}>
@@ -52,28 +53,48 @@ const Profile = ({ currentUser }) => {
 						<Card className='card-profile shadow mt--400'>
 							<div className='px-4'>
 								<Row className='justify-content-center'>
-									<div className='card-profile-image'>
-										<a href='#pablo' onClick={(e) => e.preventDefault()}>
+									<Col className='order-lg-4 ' lg='4'>
+										<div className='profile-image-n-text-container'>
+											<div className='wrapper'>
+												<div className='wrapper-cell'>
+													<div className='image' />
+													<div className='text'>
+														<div className='text-line ' />
+														<div className='text-line ' />
+													</div>
+												</div>
+											</div>
 											<img
+												src={userData?.photoUrl}
 												alt='...'
-												className='rounded-circle'
-												src={userData.photoUrl}
 												onLoad={() => setImgLoaded(true)}
+												style={{ display: 'none' }}
 											/>
-											{!imgLoaded && (
+											{imgLoaded ? (
 												<img
 													alt='...'
-													className='rounded-circle user-photo-placeholder'
+													className={`rounded-circle profile-image`}
+													src={userData?.photoUrl}
+												/>
+											) : (
+												<img
+													alt='...'
+													className={`rounded-circle profile-image user-photo-placeholder`}
 													src={require('assets/img/icons/common/user-outline.svg')}
 												/>
 											)}
-										</a>
-									</div>
+											<div className='user-name-email-container'>
+												<h3>{userData?.name}</h3>
+												<div className='h6 font-weight-300'>
+													{userData?.email}
+												</div>
+											</div>
+										</div>
+									</Col>
+									<Col className='order-lg-6 align-self-lg-center' lg='6'>
+										<UserDetailTabs />
+									</Col>
 								</Row>
-								<div className='text-center mt-7'>
-									<h3>{userData.name}</h3>
-									<div className='h6 font-weight-300'>{userData.email}</div>
-								</div>
 								<div className='mt-5 py-5 border-top text-center'>
 									<Row className='justify-content-center'>
 										{services.map((service) => {

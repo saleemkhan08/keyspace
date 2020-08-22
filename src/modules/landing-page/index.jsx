@@ -23,7 +23,6 @@ import {
 } from 'reactstrap';
 
 // core components
-import CardsFooter from 'components/Footers/CardsFooter.js';
 
 // index page sections
 import Download from '../IndexSections/Download.js';
