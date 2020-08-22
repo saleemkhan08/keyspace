@@ -4,6 +4,18 @@
 		url(../fonts/Quicksand-VariableFont_wght.ttf) format('truetype');
 }
 
+@font-face {
+	font-family: 'QuicksandBold';
+	src: local('QuicksandBold'),
+		url(../fonts/Quicksand-SemiBold.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'QuicksandBolder';
+	src: local('QuicksandBolder'),
+		url(../fonts/Quicksand-Bold.ttf) format('truetype');
+}
+
 html,
 body {
 	font-family: 'Quicksand' !important;

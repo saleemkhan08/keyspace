@@ -18,7 +18,8 @@ import 'assets/scss/argon-design-system-react.scss?v1.1.0';
 import 'assets/css/custom-fonts.css';
 
 import { useAuth } from 'global-state/firestoreHooks';
-import LandingPageNavbar from 'components/Navbars/landing-page-navbar';
+import Navbar from 'components/navbar';
+import Footer from 'components/footer';
 
 export const ROUTES = {
 	INDEX: '/',
@@ -51,7 +52,7 @@ const Routes = () => {
 	return (
 		<>
 			<BrowserRouter>
-				<LandingPageNavbar
+				<Navbar
 					onLogin={handleLogin}
 					onLogout={handleLogout}
 					isLoggedIn={!!currentUser}
@@ -70,6 +71,7 @@ const Routes = () => {
 				</Route> */}
 					<Redirect to={ROUTES.INDEX} />
 				</Switch>
+				<Footer />
 			</BrowserRouter>
 		</>
 	);

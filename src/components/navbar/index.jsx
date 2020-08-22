@@ -16,7 +16,7 @@ import {
 	NavLink,
 } from 'reactstrap';
 
-import './landing-page-navbar.scss';
+import './navbar.scss';
 const LandingPageNavbar = ({ onLogin, onLogout, isLoggedIn }) => {
 	const [collapseClasses, setCollapseClasses] = useState('');
 	const [openCollapse, setOpenCollapse] = useState(false);

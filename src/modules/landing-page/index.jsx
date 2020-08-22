@@ -808,7 +808,6 @@ const LandingPage = ({ currentUser }) => {
 				</section>
 				<Download />
 			</main>
-			<CardsFooter />
 		</>
 	);
 };
