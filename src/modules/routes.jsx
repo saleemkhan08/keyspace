@@ -2,14 +2,10 @@ import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import Landing from 'views/examples/Landing.js';
-// import Login from 'views/examples/Login.js';
-// import Profile from 'views/examples/Profile.js';
-// import Register from 'views/examples/Register.js';
 import LandingPage from 'modules/landing-page';
 import ProfilePage from 'modules/profile-page';
-// import ServicesPage from 'modules/services-page';
-
+import ServicesPage from 'modules/services-page';
+import PropertiesPage from 'modules/properties-page';
 import { loginWithGoole, logout } from 'global-state/auth-slice';
 
 import 'assets/vendor/nucleo/css/nucleo.css';
@@ -25,6 +21,7 @@ export const ROUTES = {
 	INDEX: '/',
 	PROFILE: '/profile',
 	SERVICES: '/services',
+	PROPERTIES: 'properties',
 };
 
 const Routes = () => {
@@ -35,13 +32,6 @@ const Routes = () => {
 			return state.auth.user || {};
 		}
 	);
-
-	console.log('SalredirectToProfilePage : ', {
-		currentUser,
-		loginProgress,
-		loginErrorMsg,
-		redirectToProfilePage,
-	});
 
 	const handleLogin = () => {
 		dispatch(loginWithGoole());
@@ -65,10 +55,12 @@ const Routes = () => {
 					<Route path={ROUTES.PROFILE} exact>
 						<ProfilePage currentUser={currentUser} />
 					</Route>
-					{/*
-				<Route path={ROUTES.SERVICES} exact>
-					<ServicesPage currentUser={currentUser} />
-				</Route> */}
+					<Route path={ROUTES.SERVICES} exact>
+						<ServicesPage currentUser={currentUser} />
+					</Route>
+					<Route path={ROUTES.PROPERTIES} exact>
+						<PropertiesPage currentUser={currentUser} />
+					</Route>
 					<Redirect to={ROUTES.INDEX} />
 				</Switch>
 				<Footer />

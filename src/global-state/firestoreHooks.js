@@ -6,7 +6,7 @@ export const useDocument = (docPath) => {
 	useEffect(() => {
 		const ref = firestore.doc(docPath);
 		const unSubscribe = ref.onSnapshot((doc) => {
-			setData(doc.data());
+			setData(doc?.data());
 		});
 		return () => {
 			unSubscribe();
@@ -14,6 +14,23 @@ export const useDocument = (docPath) => {
 	}, [docPath]);
 
 	return data;
+};
+
+export const useCollection = (collectionPath) => {
+	console.log('Salcollection : ', { collectionPath });
+	const [collection, setCollection] = useState([]);
+	useEffect(() => {
+		const ref = firestore.collection(collectionPath);
+
+		console.log('Salcollection : ', { ref });
+		const unSubscribe = ref.onSnapshot((querySnapshot) => {
+			setCollection(querySnapshot?.docs?.map((doc) => doc.data()));
+		});
+		return () => {
+			unSubscribe();
+		};
+	}, [collectionPath]);
+	return collection;
 };
 
 export const useAuth = () => {

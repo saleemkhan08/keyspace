@@ -8,7 +8,7 @@ export const ProfileRightBtn = () => {
 				<Button
 					className='mr-4'
 					color='info'
-					href='#pablo'
+					href='#keyspace'
 					onClick={(e) => e.preventDefault()}
 					size='sm'>
 					Connect
@@ -16,7 +16,7 @@ export const ProfileRightBtn = () => {
 				<Button
 					className='float-right'
 					color='default'
-					href='#pablo'
+					href='#keyspace'
 					onClick={(e) => e.preventDefault()}
 					size='sm'>
 					Message

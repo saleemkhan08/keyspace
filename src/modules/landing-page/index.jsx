@@ -151,7 +151,7 @@ const LandingPage = ({ currentUser }) => {
 												<Button
 													className='mt-4'
 													color='primary'
-													href='#pablo'
+													href='#keyspace'
 													onClick={(e) => e.preventDefault()}>
 													Learn more
 												</Button>
@@ -186,7 +186,7 @@ const LandingPage = ({ currentUser }) => {
 												<Button
 													className='mt-4'
 													color='success'
-													href='#pablo'
+													href='#keyspace'
 													onClick={(e) => e.preventDefault()}>
 													Learn more
 												</Button>
@@ -221,7 +221,7 @@ const LandingPage = ({ currentUser }) => {
 												<Button
 													className='mt-4'
 													color='warning'
-													href='#pablo'
+													href='#keyspace'
 													onClick={(e) => e.preventDefault()}>
 													Learn more
 												</Button>
@@ -357,7 +357,7 @@ const LandingPage = ({ currentUser }) => {
 									</p>
 									<a
 										className='font-weight-bold text-warning mt-5'
-										href='#pablo'
+										href='#keyspace'
 										onClick={(e) => e.preventDefault()}>
 										A beautiful UI Kit for impactful websites
 									</a>
@@ -411,7 +411,7 @@ const LandingPage = ({ currentUser }) => {
 												</p>
 												<a
 													className='text-success'
-													href='#pablo'
+													href='#keyspace'
 													onClick={(e) => e.preventDefault()}>
 													Learn more
 												</a>
@@ -438,7 +438,7 @@ const LandingPage = ({ currentUser }) => {
 												</p>
 												<a
 													className='text-warning'
-													href='#pablo'
+													href='#keyspace'
 													onClick={(e) => e.preventDefault()}>
 													Learn more
 												</a>
@@ -492,21 +492,21 @@ const LandingPage = ({ currentUser }) => {
 											<Button
 												className='btn-icon-only rounded-circle'
 												color='warning'
-												href='#pablo'
+												href='#keyspace'
 												onClick={(e) => e.preventDefault()}>
 												<i className='fa fa-twitter' />
 											</Button>
 											<Button
 												className='btn-icon-only rounded-circle ml-1'
 												color='warning'
-												href='#pablo'
+												href='#keyspace'
 												onClick={(e) => e.preventDefault()}>
 												<i className='fa fa-facebook' />
 											</Button>
 											<Button
 												className='btn-icon-only rounded-circle ml-1'
 												color='warning'
-												href='#pablo'
+												href='#keyspace'
 												onClick={(e) => e.preventDefault()}>
 												<i className='fa fa-dribbble' />
 											</Button>
@@ -533,21 +533,21 @@ const LandingPage = ({ currentUser }) => {
 											<Button
 												className='btn-icon-only rounded-circle'
 												color='primary'
-												href='#pablo'
+												href='#keyspace'
 												onClick={(e) => e.preventDefault()}>
 												<i className='fa fa-twitter' />
 											</Button>
 											<Button
 												className='btn-icon-only rounded-circle ml-1'
 												color='primary'
-												href='#pablo'
+												href='#keyspace'
 												onClick={(e) => e.preventDefault()}>
 												<i className='fa fa-facebook' />
 											</Button>
 											<Button
 												className='btn-icon-only rounded-circle ml-1'
 												color='primary'
-												href='#pablo'
+												href='#keyspace'
 												onClick={(e) => e.preventDefault()}>
 												<i className='fa fa-dribbble' />
 											</Button>
@@ -572,21 +572,21 @@ const LandingPage = ({ currentUser }) => {
 											<Button
 												className='btn-icon-only rounded-circle'
 												color='info'
-												href='#pablo'
+												href='#keyspace'
 												onClick={(e) => e.preventDefault()}>
 												<i className='fa fa-twitter' />
 											</Button>
 											<Button
 												className='btn-icon-only rounded-circle ml-1'
 												color='info'
-												href='#pablo'
+												href='#keyspace'
 												onClick={(e) => e.preventDefault()}>
 												<i className='fa fa-facebook' />
 											</Button>
 											<Button
 												className='btn-icon-only rounded-circle ml-1'
 												color='info'
-												href='#pablo'
+												href='#keyspace'
 												onClick={(e) => e.preventDefault()}>
 												<i className='fa fa-dribbble' />
 											</Button>
@@ -611,21 +611,21 @@ const LandingPage = ({ currentUser }) => {
 											<Button
 												className='btn-icon-only rounded-circle'
 												color='success'
-												href='#pablo'
+												href='#keyspace'
 												onClick={(e) => e.preventDefault()}>
 												<i className='fa fa-twitter' />
 											</Button>
 											<Button
 												className='btn-icon-only rounded-circle ml-1'
 												color='success'
-												href='#pablo'
+												href='#keyspace'
 												onClick={(e) => e.preventDefault()}>
 												<i className='fa fa-facebook' />
 											</Button>
 											<Button
 												className='btn-icon-only rounded-circle ml-1'
 												color='success'
-												href='#pablo'
+												href='#keyspace'
 												onClick={(e) => e.preventDefault()}>
 												<i className='fa fa-dribbble' />
 											</Button>

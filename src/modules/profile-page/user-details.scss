@@ -6,6 +6,23 @@
 	display: flex;
 }
 
+.user-details-body {
+	min-height: 300px;
+	height: max-content;
+}
+
+.nav-pill-icon svg {
+	font-size: 24px !important;
+}
+
+.nav-pill-text {
+	display: flex !important;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	font-size: 18px !important;
+}
+
 @media (max-width: 768px) {
 	.show-sm {
 		display: flex !important;
@@ -17,6 +34,13 @@
 	}
 }
 
-.user-details-card-body {
-	height: 300px;
+@media (max-width: 360px) {
+	.nav-pills-circle .nav-link {
+		height: 48px !important;
+		width: 48px !important;
+		line-height: 48px !important;
+	}
+	.nav-pill-icon svg {
+		font-size: 18px !important;
+	}
 }
