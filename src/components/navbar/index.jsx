@@ -17,9 +17,12 @@ import {
 import NavItem from './nav-item';
 import './navbar.scss';
 import { ROUTES } from 'modules/routes';
-const LandingPageNavbar = ({ onLogin, onLogout, isLoggedIn }) => {
+import ProfileModal from 'modules/profile-page/profile-modal';
+const LandingPageNavbar = ({ onLogin, onLogout, currentUser }) => {
 	const [collapseClasses, setCollapseClasses] = useState('');
 	const [openCollapse, setOpenCollapse] = useState(false);
+	const [showProfileModal, setShowProfileModal] = useState(false);
+	const isLoggedIn = !!currentUser;
 	useEffect(() => {
 		let headroom = new Headroom(document.getElementById('navbar-main'));
 		// initialise
@@ -105,7 +108,7 @@ const LandingPageNavbar = ({ onLogin, onLogout, isLoggedIn }) => {
 								/>
 								{isLoggedIn && (
 									<NavItem
-										route={ROUTES.PROFILE}
+										onClick={() => setShowProfileModal(!showProfileModal)}
 										icon='ni ni-single-02'
 										text='Profile'
 									/>
@@ -120,6 +123,11 @@ const LandingPageNavbar = ({ onLogin, onLogout, isLoggedIn }) => {
 					</Container>
 				</Navbar>
 			</header>
+			<ProfileModal
+				currentUser={currentUser}
+				isOpen={showProfileModal}
+				toggleModal={() => setShowProfileModal(!showProfileModal)}
+			/>
 		</>
 	);
 };

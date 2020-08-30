@@ -45,7 +45,7 @@ const Routes = () => {
 				<Navbar
 					onLogin={handleLogin}
 					onLogout={handleLogout}
-					isLoggedIn={!!currentUser}
+					currentUser={currentUser}
 				/>
 				<div>{loginErrorMsg}</div>
 				<Switch>
