@@ -1,11 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import LandingPage from 'modules/landing-page';
-import ProfilePage from 'modules/profile-page';
-import ServicesPage from 'modules/services-page';
-import PropertiesPage from 'modules/properties-page';
 import { loginWithGoole, logout } from 'global-state/auth-slice';
 
 import 'assets/vendor/nucleo/css/nucleo.css';
@@ -16,23 +13,15 @@ import 'assets/css/custom-fonts.css';
 import { useAuth } from 'global-state/firestoreHooks';
 import Navbar from 'components/navbar';
 import Footer from 'components/footer';
+import NotificationModal from 'components/notification/NotificationModal';
 
 export const ROUTES = {
 	INDEX: '/',
-	PROFILE: '/profile',
-	SERVICES: '/services',
-	PROPERTIES: 'properties',
 };
 
 const Routes = () => {
 	const currentUser = useAuth();
 	const dispatch = useDispatch();
-	const { loginProgress, loginErrorMsg, redirectToProfilePage } = useSelector(
-		(state) => {
-			return state.auth.user || {};
-		}
-	);
-
 	const handleLogin = () => {
 		dispatch(loginWithGoole());
 	};
@@ -47,22 +36,13 @@ const Routes = () => {
 					onLogout={handleLogout}
 					currentUser={currentUser}
 				/>
-				<div>{loginErrorMsg}</div>
 				<Switch>
 					<Route path={ROUTES.INDEX} exact>
 						<LandingPage currentUser={currentUser} />
 					</Route>
-					<Route path={ROUTES.PROFILE} exact>
-						<ProfilePage currentUser={currentUser} />
-					</Route>
-					<Route path={ROUTES.SERVICES} exact>
-						<ServicesPage currentUser={currentUser} />
-					</Route>
-					<Route path={ROUTES.PROPERTIES} exact>
-						<PropertiesPage currentUser={currentUser} />
-					</Route>
 					<Redirect to={ROUTES.INDEX} />
 				</Switch>
+				<NotificationModal />
 				<Footer />
 			</BrowserRouter>
 		</>

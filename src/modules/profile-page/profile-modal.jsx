@@ -16,7 +16,7 @@ const ProfileModal = ({ currentUser, isOpen, toggleModal }) => {
 	const userData = useDocument(`${USER_COLLECTION}/${currentUser?.uid}`);
 	return (
 		<Modal
-			className='modal-dialog-centered'
+			className='modal-dialog-centered profileModal'
 			contentClassName='profile-modal-container'
 			size='lg'
 			isOpen={isOpen}
