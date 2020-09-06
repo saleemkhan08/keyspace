@@ -8,7 +8,7 @@ import { Row, Col, Modal } from 'reactstrap';
 import FullPageLoading from 'components/full-page-loading';
 import UserDetailTabs from './user-details';
 
-import './profile-page.scss';
+import './profile-modal.scss';
 
 const ProfileModal = ({ currentUser, isOpen, toggleModal }) => {
 	// TODO - move image error handling to a separate component

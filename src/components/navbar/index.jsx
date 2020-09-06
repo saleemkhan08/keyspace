@@ -57,17 +57,12 @@ const LandingPageNavbar = ({ onLogin, onLogout, currentUser }) => {
 								<Keyspace />|<span className='nav-brand-key-text'>KEY</span>
 								<span className='nav-brand-space-text'>SPACE</span>
 							</span>
-							{/* <img
-								alt='...'
-								src={require('assets/img/brand/keyspaceHorizontalLogo.png')}
-							/> */}
 						</NavbarBrand>
 						<button
 							className='navbar-toggler'
 							onClick={() => setOpenCollapse(true)}>
 							<span className='navbar-toggler-icon' />
 						</button>
-						{/* TODO Make this controlled collapse */}
 						<Collapse
 							isOpen={openCollapse}
 							navbar
@@ -96,16 +91,6 @@ const LandingPageNavbar = ({ onLogin, onLogout, currentUser }) => {
 								</Row>
 							</div>
 							<Nav className='align-items-lg-center ml-lg-auto' navbar>
-								<NavItem
-									route={ROUTES.SERVICES}
-									icon='ni ni-settings'
-									text='Services'
-								/>
-								<NavItem
-									route={ROUTES.PROPERTIES}
-									icon='ni ni-building'
-									text='Properties'
-								/>
 								{isLoggedIn && (
 									<NavItem
 										onClick={() => setShowProfileModal(!showProfileModal)}

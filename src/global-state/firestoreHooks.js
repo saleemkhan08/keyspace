@@ -16,20 +16,19 @@ export const useDocument = (docPath) => {
 	return data;
 };
 
-export const useCollection = (collectionPath) => {
-	console.log('Salcollection : ', { collectionPath });
+export const useCollection = ({ collectionPath, order = null }) => {
 	const [collection, setCollection] = useState([]);
 	useEffect(() => {
-		const ref = firestore.collection(collectionPath);
-
-		console.log('Salcollection : ', { ref });
+		const ref = order
+			? firestore.collection(collectionPath).orderBy(order)
+			: firestore.collection(collectionPath);
 		const unSubscribe = ref.onSnapshot((querySnapshot) => {
 			setCollection(querySnapshot?.docs?.map((doc) => doc.data()));
 		});
 		return () => {
 			unSubscribe();
 		};
-	}, [collectionPath]);
+	}, [collectionPath, order]);
 	return collection;
 };
 
