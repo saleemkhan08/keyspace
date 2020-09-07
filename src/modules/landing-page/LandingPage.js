@@ -1,15 +1,13 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { ROUTES } from 'modules/routes';
 
 // reactstrap components
 import { Button, Container, Row, Col } from 'reactstrap';
 
 // index page sections
-import ServiceSection from 'modules/services-section/index.jsx';
+import ServiceSection from 'modules/services-section/index.js';
 import About from 'modules/about/About.js';
 import Contact from 'modules/contact/Contact';
+import 'react-chat-widget/lib/styles.css';
 
 const LandingPage = ({ currentUser }) => {
 	const mainRef = useRef();
@@ -18,14 +16,6 @@ const LandingPage = ({ currentUser }) => {
 		document.scrollingElement.scrollTop = 0;
 		if (mainRef.current) mainRef.current.scrollTop = 0;
 	}, []);
-
-	const { redirectToProfilePage } = useSelector((state) => {
-		return state.auth.user || {};
-	});
-
-	if (redirectToProfilePage) {
-		return <Redirect to={ROUTES.PROFILE} />;
-	}
 	return (
 		<>
 			<main ref={mainRef}>
@@ -56,10 +46,7 @@ const LandingPage = ({ currentUser }) => {
 											and you're good to go.
 										</p>
 										<div className='btn-wrapper'>
-											<Button
-												className='btn-icon mb-3 mb-sm-0'
-												color='info'
-												href='/'>
+											<Button className='btn-icon mb-3 mb-sm-0' color='info'>
 												<span className='btn-inner--icon mr-1'>
 													<i className='fa fa-code' />
 												</span>

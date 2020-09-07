@@ -21,6 +21,7 @@ export const ROUTES = {
 
 const Routes = () => {
 	const currentUser = useAuth();
+
 	const dispatch = useDispatch();
 	const handleLogin = () => {
 		dispatch(loginWithGoole());

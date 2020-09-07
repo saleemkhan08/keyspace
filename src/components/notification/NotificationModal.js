@@ -35,7 +35,6 @@ const NotificationModal = () => {
 	}, [notifications]);
 
 	const contentClassName = getContentClassName(notifications);
-	console.log('SalcontentClassName : ', { contentClassName });
 	return (
 		<Modal
 			className='modal-dialog-centered modal-danger'

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 // JavaScript plugin that hides or shows a component based on your scroll
@@ -16,18 +17,23 @@ import {
 
 import NavItem from './nav-item';
 import './navbar.scss';
-import { ROUTES } from 'modules/routes';
 import ProfileModal from 'modules/profile-page/profile-modal';
+import { auth } from '../../firebase.js';
+
 const LandingPageNavbar = ({ onLogin, onLogout, currentUser }) => {
 	const [collapseClasses, setCollapseClasses] = useState('');
 	const [openCollapse, setOpenCollapse] = useState(false);
 	const [showProfileModal, setShowProfileModal] = useState(false);
 	const isLoggedIn = !!currentUser;
+
 	useEffect(() => {
 		let headroom = new Headroom(document.getElementById('navbar-main'));
 		// initialise
 		headroom.init();
-	});
+		auth.currentUser?.getIdTokenResult()?.then((result) => {
+			console.log('Salresult : ', { role: result.claims.role });
+		});
+	}, []);
 
 	const onExiting = () => {
 		setCollapseClasses('collapsing-out');

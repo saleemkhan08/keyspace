@@ -23,7 +23,7 @@ const ServiceSection = () => {
 						<Row className='row-grid justify-content-center'>
 							{services.map((service, index) => {
 								if (index < 3) {
-									return <ServicesCard service={service} />;
+									return <ServicesCard key={service.name} service={service} />;
 								} else return null;
 							})}
 
@@ -31,7 +31,9 @@ const ServiceSection = () => {
 								<Row className='row-grid justify-content-center'>
 									{services.map((service, index) => {
 										if (index > 2) {
-											return <ServicesCard service={service} />;
+											return (
+												<ServicesCard key={service.name} service={service} />
+											);
 										} else return null;
 									})}
 								</Row>
