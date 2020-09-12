@@ -15,12 +15,13 @@ import {
 	Col,
 } from 'reactstrap';
 
+import { ROUTES } from 'modules/routes.js';
 import NavItem from './nav-item';
 import './navbar.scss';
-import ProfileModal from 'modules/profile-page/profile-modal';
+import ProfileModal from 'modules/profile-page/ProfileModal.js';
 import { auth } from '../../firebase.js';
 
-const LandingPageNavbar = ({ onLogin, onLogout, currentUser }) => {
+const LandingPageNavbar = ({ onLogin, currentUser, onNavigate }) => {
 	const [collapseClasses, setCollapseClasses] = useState('');
 	const [openCollapse, setOpenCollapse] = useState(false);
 	const [showProfileModal, setShowProfileModal] = useState(false);
@@ -43,13 +44,6 @@ const LandingPageNavbar = ({ onLogin, onLogout, currentUser }) => {
 		setCollapseClasses('');
 	};
 
-	const handleNavButtonClick = (event) => {
-		event.preventDefault();
-		isLoggedIn ? onLogout() : onLogin();
-	};
-
-	const navBtnIconClass = `fa ${isLoggedIn ? 'fa-sign-out' : 'fa-google'}`;
-	const navBtnText = isLoggedIn ? 'Logout' : 'Login';
 	return (
 		<>
 			<header className='header-global'>
@@ -97,18 +91,22 @@ const LandingPageNavbar = ({ onLogin, onLogout, currentUser }) => {
 								</Row>
 							</div>
 							<Nav className='align-items-lg-center ml-lg-auto' navbar>
-								{isLoggedIn && (
+								<NavItem
+									onClick={() => onNavigate(ROUTES.ABOUT)}
+									text='About'
+								/>
+								<NavItem
+									onClick={() => onNavigate(ROUTES.CONTACT)}
+									text='Contact'
+								/>
+								{isLoggedIn ? (
 									<NavItem
 										onClick={() => setShowProfileModal(!showProfileModal)}
-										icon='ni ni-single-02'
 										text='Profile'
 									/>
+								) : (
+									<NavItem icon='fa fa-google' onClick={onLogin} text='Login' />
 								)}
-								<NavItem
-									icon={navBtnIconClass}
-									onClick={handleNavButtonClick}
-									text={navBtnText}
-								/>
 							</Nav>
 						</Collapse>
 					</Container>

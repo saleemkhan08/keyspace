@@ -1,16 +1,29 @@
 import React, { useEffect, useRef } from 'react';
 
 // reactstrap components
-import { Button, Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 
 // index page sections
 import ServiceSection from 'modules/services-section/index.js';
 import About from 'modules/about/About.js';
 import Contact from 'modules/contact/Contact';
-import 'react-chat-widget/lib/styles.css';
+import { showNotification } from 'global-state/notification-slice';
+import { playStoreBadge } from 'assets/img/icons';
+import './styles.scss';
+import { useDispatch } from 'react-redux';
+import { NotificationTypeEnum } from 'global-state/notification-slice';
 
-const LandingPage = ({ currentUser }) => {
+const LandingPage = ({ currentUser, currentPosition }) => {
 	const mainRef = useRef();
+	const dispatch = useDispatch();
+	const handleDownload = () => {
+		dispatch(
+			showNotification({
+				message: 'Coming Soon...',
+				type: NotificationTypeEnum.INFO,
+			})
+		);
+	};
 	useEffect(() => {
 		document.documentElement.scrollTop = 0;
 		document.scrollingElement.scrollTop = 0;
@@ -36,31 +49,17 @@ const LandingPage = ({ currentUser }) => {
 							<div className='col px-0'>
 								<Row>
 									<Col lg='6'>
-										<h1 className='display-3 text-white'>
-											A beautiful Design System{' '}
-											<span>completed with examples</span>
+										<h1 className='display-3 text-white mt-6'>
+											Make your life simpler... <br />
+											Get started with us today!
 										</h1>
-										<p className='lead text-white'>
-											The design system comes with four pre-built pages to help
-											you get started faster. You can change the text and images
-											and you're good to go.
-										</p>
-										<div className='btn-wrapper'>
-											<Button className='btn-icon mb-3 mb-sm-0' color='info'>
-												<span className='btn-inner--icon mr-1'>
-													<i className='fa fa-code' />
-												</span>
-												<span className='btn-inner--text'>Sign Up</span>
-											</Button>
-											<Button
-												className='btn-white btn-icon mb-3 mb-sm-0 ml-1'
-												color='default'
-												href='/'>
-												<span className='btn-inner--icon mr-1'>
-													<i className='ni ni-cloud-download-95' />
-												</span>
-												<span className='btn-inner--text'>Download App</span>
-											</Button>
+										<div className='btn-wrapper mt-3'>
+											<img
+												src={playStoreBadge}
+												alt='Get it on Playstore'
+												className='playStoreBadgeBtn shadow'
+												onClick={handleDownload}
+											/>
 										</div>
 									</Col>
 								</Row>
@@ -83,8 +82,8 @@ const LandingPage = ({ currentUser }) => {
 					</section>
 				</div>
 				<ServiceSection />
-				<About />
-				<Contact />
+				<About currentPosition={currentPosition} />
+				<Contact currentPosition={currentPosition} />
 			</main>
 		</>
 	);

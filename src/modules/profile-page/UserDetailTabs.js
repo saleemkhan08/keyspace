@@ -5,6 +5,9 @@ import { Home, Repeat, Rupee } from 'components/icons';
 import { NavItem, NavLink, Nav, TabContent, TabPane } from 'reactstrap';
 
 import './user-details.scss';
+import AddressTab from './AddressTab';
+import Support from './Support';
+import Payments from './Payments';
 
 const detailsList = [
 	{
@@ -81,31 +84,13 @@ const UserDetails = () => {
 			<div className='user-details-body'>
 				<TabContent activeTab={'tabs' + currentTabIndex}>
 					<TabPane tabId='tabs0'>
-						<p className='description'>
-							Raw denim you probably haven't heard of them jean shorts Austin.
-							Nesciunt tofu stumptown aliqua, retro synth master cleanse.
-							Mustache cliche tempor, williamsburg carles vegan helvetica.
-							Reprehenderit butcher retro keffiyeh dreamcatcher synth.
-						</p>
-						<p className='description'>
-							Raw denim you probably haven't heard of them jean shorts Austin.
-							Nesciunt tofu stumptown aliqua, retro synth master cleanse.
-						</p>
+						<AddressTab />
 					</TabPane>
 					<TabPane tabId='tabs1'>
-						<p className='description'>
-							Cosby sweater eu banh mi, qui irure terry richardson ex squid.
-							Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan
-							american apparel, butcher voluptate nisi qui.
-						</p>
+						<Support />
 					</TabPane>
 					<TabPane tabId='tabs2'>
-						<p className='description'>
-							Raw denim you probably haven't heard of them jean shorts Austin.
-							Nesciunt tofu stumptown aliqua, retro synth master cleanse.
-							Mustache cliche tempor, williamsburg carles vegan helvetica.
-							Reprehenderit butcher retro keffiyeh dreamcatcher synth.
-						</p>
+						<Payments />
 					</TabPane>
 				</TabContent>
 			</div>

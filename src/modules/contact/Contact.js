@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import classnames from 'classnames';
+
 import {
 	Button,
 	Card,
@@ -13,13 +14,27 @@ import {
 	Row,
 	Col,
 } from 'reactstrap';
+import { ROUTES } from 'modules/routes';
 import './styles.scss';
 
-const Contact = () => {
+const Contact = ({ currentPosition }) => {
 	const [nameFocused, setNameFocused] = useState(false);
 	const [emailFocused, setEmailFocused] = useState(false);
+
+	const positionRef = useRef(null);
+	useEffect(() => {
+		if (currentPosition === ROUTES.CONTACT) {
+			positionRef.current.scrollIntoView({
+				behavior: 'smooth',
+				block: 'start',
+			});
+		}
+	}, [currentPosition]);
+
 	return (
-		<section className='section section-lg pt-lg-0 section-contact-us'>
+		<section
+			ref={positionRef}
+			className='section section-lg pt-lg-0 section-contact-us'>
 			<Container>
 				<Row className='justify-content-center mt--300'>
 					<Col lg='8'>
@@ -98,6 +113,10 @@ const Contact = () => {
 					</Col>
 				</Row>
 			</Container>
+			{/* TODO uncomment when chat support is implemented */}
+			{/* <div className='icon icon-lg icon-shape bg-gradient-white shadow rounded-circle text-primary'>
+				<i className='ni ni-settings text-primary' />
+			</div> */}
 		</section>
 	);
 };

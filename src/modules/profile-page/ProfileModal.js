@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { USER_COLLECTION } from 'global-state/auth-slice';
 import { useDocument } from 'global-state/firestoreHooks';
 
-import { Row, Col, Modal } from 'reactstrap';
+import { Row, Col, Modal, Button } from 'reactstrap';
 
+import { logout } from 'global-state/auth-slice';
 import FullPageLoading from 'components/full-page-loading';
-import UserDetailTabs from './user-details';
+import UserDetailTabs from './UserDetailTabs';
 
 import './profile-modal.scss';
 
 const ProfileModal = ({ currentUser, isOpen, toggleModal }) => {
+	const dispatch = useDispatch();
+	const handleLogout = () => {
+		dispatch(logout());
+		toggleModal(false);
+	};
+
 	// TODO - move image error handling to a separate component
 	const [imgLoaded, setImgLoaded] = useState(false);
 	const userData = useDocument(`${USER_COLLECTION}/${currentUser?.uid}`);
@@ -22,14 +30,6 @@ const ProfileModal = ({ currentUser, isOpen, toggleModal }) => {
 			isOpen={isOpen}
 			toggle={toggleModal}>
 			<div className='modal-body'>
-				{/* <button
-					aria-label='Close'
-					className='close'
-					data-dismiss='modal'
-					type='button'
-					onClick={toggleModal}>
-					<span aria-hidden={true}>×</span>
-				</button> */}
 				{currentUser?.isLoading ? (
 					<FullPageLoading />
 				) : (
@@ -61,6 +61,14 @@ const ProfileModal = ({ currentUser, isOpen, toggleModal }) => {
 										<div className='font-weight-300 profile-page-email'>
 											{userData?.email}
 										</div>
+										<Button
+											className='logout-button'
+											outline
+											size='sm'
+											color='default'
+											onClick={handleLogout}>
+											LOGOUT
+										</Button>
 									</div>
 								</div>
 							</Col>

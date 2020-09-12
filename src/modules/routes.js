@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import LandingPage from 'modules/landing-page';
-import { loginWithGoole, logout } from 'global-state/auth-slice';
+import { loginWithGoole } from 'global-state/auth-slice';
 
 import 'assets/vendor/nucleo/css/nucleo.css';
 import 'assets/vendor/font-awesome/css/font-awesome.min.css';
@@ -17,29 +17,32 @@ import NotificationModal from 'components/notification/NotificationModal';
 
 export const ROUTES = {
 	INDEX: '/',
+	ABOUT: '#about',
+	CONTACT: '#contact',
 };
 
 const Routes = () => {
 	const currentUser = useAuth();
-
+	const [currentPosition, setCurrentPosition] = useState(null);
 	const dispatch = useDispatch();
 	const handleLogin = () => {
 		dispatch(loginWithGoole());
 	};
-	const handleLogout = () => {
-		dispatch(logout());
-	};
+
 	return (
 		<>
 			<BrowserRouter>
 				<Navbar
 					onLogin={handleLogin}
-					onLogout={handleLogout}
 					currentUser={currentUser}
+					onNavigate={setCurrentPosition}
 				/>
 				<Switch>
 					<Route path={ROUTES.INDEX} exact>
-						<LandingPage currentUser={currentUser} />
+						<LandingPage
+							currentUser={currentUser}
+							currentPosition={currentPosition}
+						/>
 					</Route>
 					<Redirect to={ROUTES.INDEX} />
 				</Switch>
