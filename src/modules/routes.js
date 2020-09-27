@@ -2,21 +2,23 @@ import React, { useState } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import LandingPage from 'modules/landing-page';
-import { loginWithGoole } from 'global-state/auth-slice';
+import LandingPage from 'modules/LandingPage';
+import ProfilePage from 'modules/ProfilePage';
+import Navbar from 'components/Navbar';
+import Footer from 'components/Footer';
+import NotificationModal from 'components/NotificationModal';
+
+import { loginWithGoole } from 'globalState/authSlice';
+import { useAuth } from 'globalState/firestoreHooks';
 
 import 'assets/vendor/nucleo/css/nucleo.css';
 import 'assets/vendor/font-awesome/css/font-awesome.min.css';
 import 'assets/scss/argon-design-system-react.scss?v1.1.0';
 import 'assets/css/custom-fonts.css';
 
-import { useAuth } from 'global-state/firestoreHooks';
-import Navbar from 'components/navbar';
-import Footer from 'components/footer';
-import NotificationModal from 'components/notification/NotificationModal';
-
 export const ROUTES = {
 	INDEX: '/',
+	PROFILE: '/profile',
 	ABOUT: '#about',
 	CONTACT: '#contact',
 };
@@ -40,6 +42,12 @@ const Routes = () => {
 				<Switch>
 					<Route path={ROUTES.INDEX} exact>
 						<LandingPage
+							currentUser={currentUser}
+							currentPosition={currentPosition}
+						/>
+					</Route>
+					<Route path={ROUTES.PROFILE} exact>
+						<ProfilePage
 							currentUser={currentUser}
 							currentPosition={currentPosition}
 						/>

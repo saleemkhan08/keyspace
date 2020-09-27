@@ -1,0 +1,43 @@
+.support-tab-container {
+	.support-tab-title-container {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		.complaints-info-icon {
+			margin-left: 5px;
+			cursor: pointer;
+			transition: 0.3s;
+			border: 1px solid #172b4d;
+			border-radius: 4px;
+			padding: 5px 10px;
+			vertical-align: text-bottom;
+			font-size: 18px;
+		}
+		.complaints-info-icon:hover {
+			color: white;
+			border-color: #5e72e4;
+			background-color: #5e72e4;
+		}
+		.create-new-ticket-button {
+			height: 30px;
+			padding: 5px 10px;
+		}
+	}
+	.support-tab-list-container {
+		.support-tab-list-item-container {
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			margin: 10px 0;
+			padding: 10px;
+			.support-tab-list-item-title {
+				margin: 0;
+			}
+			.support-tab-list-item-created-on {
+				font-size: 14px !important;
+			}
+			.support-tab-list-item-description {
+				margin: 0;
+			}
+		}
+	}
+}
