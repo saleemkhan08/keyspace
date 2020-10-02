@@ -1,31 +1,23 @@
-import React, { useState, createElement } from 'react';
-import classnames from 'classnames';
-import { Home, Repeat, Rupee } from 'components/Icons';
+import React, { useState } from 'react';
+import { Details, Support, Rupee } from 'components/Icons';
 // reactstrap components
-import {
-	NavItem,
-	NavLink,
-	Nav,
-	TabContent,
-	TabPane,
-	Card,
-	CardBody,
-} from 'reactstrap';
+import { Nav, TabContent, TabPane, Card, CardBody } from 'reactstrap';
+import TabLink from 'components/TabLink/TabLink';
 
-import AddressTab from './UserDataTab';
-import Support from './SupportTab';
+import DetailsTab from './UserDataTab';
+import SupportTab from './SupportTab';
 import Payments from './PaymentsTab';
 
 import './styles.scss';
 
 const detailsList = [
 	{
-		name: 'Address',
-		icon: Home,
+		name: 'Details',
+		icon: Details,
 	},
 	{
-		name: 'Subscriptions',
-		icon: Repeat,
+		name: 'Support',
+		icon: Support,
 	},
 	{
 		name: 'Payments',
@@ -36,57 +28,38 @@ const detailsList = [
 const UserDetails = () => {
 	const [currentTabIndex, setCurrentTabIndex] = useState(0);
 
-	const updateNavIndex = (e, index) => {
-		e.preventDefault();
+	const updateNavIndex = (event, index) => {
+		event.preventDefault();
 		setCurrentTabIndex(index);
 	};
 
 	return (
 		<>
 			<div className='nav-wrapper'>
-				<Nav
-					className='nav-pills-circle show-sm'
-					id='tabs_2'
-					pills
-					role='tablist'>
+				<Nav className='nav-pills-circle show-sm' pills role='tablist'>
 					{detailsList.map((detail, index) => (
-						<NavItem key={detail.name}>
-							<NavLink
-								aria-selected={currentTabIndex === index}
-								className={classnames('rounded-circle', {
-									active: currentTabIndex === index,
-								})}
-								onClick={(e) => updateNavIndex(e, index)}
-								href='#keyspace'
-								role='tab'>
-								<span className='nav-link-icon d-block nav-pill-icon'>
-									{createElement(detail.icon)}
-								</span>
-							</NavLink>
-						</NavItem>
+						<TabLink
+							key={detail.name}
+							active={currentTabIndex === index}
+							name={detail.name}
+							icon={detail.icon}
+							onClick={(event) => updateNavIndex(event, index)}
+							rounded
+						/>
 					))}
 				</Nav>
 				<Nav
 					className='nav-fill flex-column flex-md-row hide-sm'
-					id='tabs-icons-text'
 					pills
 					role='tablist'>
 					{detailsList.map((detail, index) => (
-						<NavItem key={detail.name}>
-							<NavLink
-								aria-selected={currentTabIndex === index}
-								className={classnames('nav-pill-text mb-sm-3 mb-md-0', {
-									active: currentTabIndex === index,
-								})}
-								onClick={(e) => updateNavIndex(e, index)}
-								href='#keyspace'
-								role='tab'>
-								<span className='nav-pill-icon mr-2 mb-1'>
-									{createElement(detail.icon)}
-								</span>
-								{detail.name}
-							</NavLink>
-						</NavItem>
+						<TabLink
+							key={detail.name}
+							active={currentTabIndex === index}
+							name={detail.name}
+							icon={detail.icon}
+							onClick={(event) => updateNavIndex(event, index)}
+						/>
 					))}
 				</Nav>
 			</div>
@@ -94,10 +67,10 @@ const UserDetails = () => {
 				<CardBody>
 					<TabContent activeTab={'tabs' + currentTabIndex}>
 						<TabPane tabId='tabs0'>
-							<AddressTab />
+							<DetailsTab />
 						</TabPane>
 						<TabPane tabId='tabs1'>
-							<Support />
+							<SupportTab />
 						</TabPane>
 						<TabPane tabId='tabs2'>
 							<Payments />

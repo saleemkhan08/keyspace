@@ -1,0 +1,11 @@
+.tab-link {
+	.tab-link-text.active:hover {
+		color: #ddd !important;
+	}
+	.tab-link-text {
+		cursor: pointer;
+	}
+	.tab-link-text:hover {
+		color: #aaa !important;
+	}
+}

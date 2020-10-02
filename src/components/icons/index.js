@@ -8,3 +8,5 @@ export { default as Rupee } from './Rupee';
 export { default as UserOutline } from './UserOutline';
 export { default as User } from './User';
 export { default as Keyspace } from './Keyspace';
+export { default as Details } from './Details';
+export { default as Support } from './Support';
