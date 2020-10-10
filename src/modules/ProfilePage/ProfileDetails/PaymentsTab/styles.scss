@@ -1,0 +1,93 @@
+.payments-tab-container {
+	.payments-tab-title-container {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		.payments-info-icon {
+			margin-left: 5px;
+			cursor: pointer;
+			transition: 0.3s;
+			border: 1px solid #172b4d;
+			border-radius: 4px;
+			padding: 5px 10px;
+			vertical-align: text-bottom;
+			font-size: 18px;
+		}
+		.payments-info-icon:hover {
+			color: white;
+			border-color: #5e72e4;
+			background-color: #5e72e4;
+		}
+		.create-new-ticket-button {
+			height: 30px;
+			padding: 5px 10px;
+		}
+	}
+	.payments-tab-list-container {
+		.payments-tab-list-item-container {
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			margin: 10px 0;
+			padding: 10px;
+			.payments-tab-list-item-title {
+				margin: 0;
+				display: flex;
+				justify-content: space-between;
+				.payments-tab-list-item-right-container {
+					display: flex;
+					align-items: center;
+				}
+			}
+			.payments-tab-list-item-created-on {
+				font-size: 14px !important;
+			}
+			.payments-tab-list-item-description {
+				margin: 0;
+			}
+		}
+	}
+}
+
+.rent-receipt-card-header {
+	display: flex;
+	justify-content: space-between;
+	text-align: right;
+}
+
+.rent-receipt-card-body {
+	padding: 40px !important;
+}
+
+.wide-modal {
+	width: 100%;
+}
+.rent-receipt-card-footer {
+	text-align: center;
+}
+.rent-receipt-card-list-item {
+	text-align: left;
+}
+
+.rent-receipt-card-list-value {
+	text-align: right;
+}
+
+.bold-font {
+	font-family: QuicksandBold !important;
+}
+
+.table th,
+.table td {
+	border: none !important;
+	padding: 0 !important;
+}
+
+.border-top {
+	margin-bottom: 5px !important;
+	border-color: #172b4d !important;
+}
+
+.border-bottom {
+	margin-top: 5px !important;
+	border-color: #172b4d !important;
+}

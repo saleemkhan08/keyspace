@@ -1,37 +1,81 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import { Month } from 'i18n/util';
+import PaymentInfo from './PaymentInfo';
+import TermsNConditions from './TermsNConditions';
+
 import './styles.scss';
 
+const listOfBillsPaid = [
+	{
+		id: 1001,
+		month: Date.parse('06-01-2020 00:00'),
+		paidTimestamp: Date.parse('07-23-2020 08:30'),
+		amount: 25200,
+		breakUp: {
+			Rent: 18000,
+			'Electricity Bill': 1200,
+			'Water Bill': 800,
+			'Maid Service Charge': 5000,
+			'Convenience Fee': 200,
+		},
+	},
+	{
+		id: 1002,
+		month: Date.parse('07-01-2020 00:00'),
+		paidTimestamp: Date.parse('08-23-2020 08:30'),
+		amount: 25200,
+		breakUp: {
+			Rent: 18000,
+			'Electricity Bill': 1200,
+			'Water Bill': 800,
+			'Maid Service Charge': 5000,
+			'Convenience Fee': 200,
+		},
+	},
+	{
+		id: 1003,
+		month: Date.parse('08-01-2020 00:00'),
+		paidTimestamp: Date.parse('09-23-2020 08:30'),
+		amount: 25200,
+		breakUp: {
+			Rent: 18000,
+			'Electricity Bill': 1200,
+			'Water Bill': 800,
+			'Maid Service Charge': 5000,
+			'Convenience Fee': 200,
+		},
+	},
+];
+
 const Payments = () => {
+	const [showTermsNConditions, setShowTermsNConditions] = useState(false);
 	return (
 		<div>
-			<ul>
-				<li>Rent has to be paid on or before 5th of every month</li>
-				<li>After 5th interest is applied on the number of days delayed. </li>
-				<li>3% interest per month applicable on each day.</li>
-				<li>Example : 15000 Rent corresponds to 450 / month or 15 / day</li>
-				<li>
-					Monthly rent and other bills will be uploaded to the tenants profile.
-				</li>
-				<li>
-					Water bill and Electricity bill : Since tenants might delay paying the
-					bill and there is a chance that electricity might be cut for the
-					entire building if the bill is not paid. Keyspace will pay all the
-					bills on tenants behalf and will collect the amount as part of the
-					rent.
-				</li>
-				<li>Other services opted</li>
-				<li>Same interest applies to every service.</li>
-				<li>One months rent will be deducted from Advance for revamp.</li>
-				<li>
-					If a tenant leaves before the tenancy duration is finished then
-					additional one month’s rent will be deducted.
-				</li>
-				<li>1 month notice should be given before leaving.</li>
-				<li>
-					If any of the bills are not paid then the amount will be deducted from
-					the advance while leaving.
-				</li>
-			</ul>
+			<div className='payments-tab-container'>
+				<div className='payments-tab-title-container'>
+					<h3>
+						<Month timestamp={Date.now()} />
+						<span
+							className='fa fa-info payments-info-icon'
+							id='payments-info'
+							onClick={() => setShowTermsNConditions(true)}
+						/>
+						<TermsNConditions
+							isOpen={showTermsNConditions}
+							onToggle={() => setShowTermsNConditions(false)}
+						/>
+					</h3>
+				</div>
+				<PaymentInfo bill={listOfBillsPaid[0]} />
+				<div className='payments-tab-list-container'>
+					{listOfBillsPaid
+						.sort((bill1, bill2) => bill2.paidTimestamp - bill1.paidTimestamp)
+						.map((bill) => (
+							<PaymentInfo bill={bill} key={bill.id} />
+						))}
+				</div>
+			</div>
 		</div>
 	);
 };
