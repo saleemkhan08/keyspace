@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { Button, Collapse, Table } from 'reactstrap';
+import { useIntl } from 'react-intl';
+import { Button, Collapse } from 'reactstrap';
 
 import { DateTime, Month, INR } from 'i18n/util';
 import messages from 'i18n/messages.js';
 import './styles.scss';
 import BillDownloadModal from './BillDownloadModal';
+import BreakUpTable from './BreakUpTable';
 
 const PaymentInfo = ({ bill }) => {
-	const { id, paidTimestamp, breakUp, amount } = bill;
+	const { id, paidTimestamp, amount } = bill;
 	const [showMoreInfo, setShowMoreInfo] = useState(false);
 	const { formatMessage } = useIntl();
 	const [showBill, setShowBill] = useState(false);
@@ -50,7 +51,6 @@ const PaymentInfo = ({ bill }) => {
 						DateTime: <DateTime timestamp={new Date(paidTimestamp)} />,
 					})}
 				</p>
-
 				<BillDownloadModal
 					bill={bill}
 					isOpen={showBill}
@@ -58,42 +58,7 @@ const PaymentInfo = ({ bill }) => {
 				/>
 			</div>
 			<Collapse isOpen={showMoreInfo}>
-				<Table>
-					<thead>
-						<tr>
-							<th>{formatMessage(messages.slNo)}</th>
-							<th>{formatMessage(messages.category)}</th>
-							<th>{formatMessage(messages.billAmount)}</th>
-						</tr>
-					</thead>
-					<tbody>
-						{Object.keys(breakUp).map((key, index) => {
-							return (
-								<tr key={key}>
-									<th scope='row'>{index + 1}</th>
-									<td>
-										{messages[key] ? (
-											formatMessage(messages[key])
-										) : (
-											<FormattedMessage id={key} defaultMessage={key} />
-										)}
-									</td>
-									<td>
-										<INR amount={breakUp[key]} />
-									</td>
-								</tr>
-							);
-						})}
-						<tr>
-							<th scope='row' colSpan={2}>
-								<strong>{formatMessage(messages.total)}</strong>
-							</th>
-							<th scope='row'>
-								<INR amount={amount} />
-							</th>
-						</tr>
-					</tbody>
-				</Table>
+				<BreakUpTable bill={bill} />
 			</Collapse>
 		</div>
 	);

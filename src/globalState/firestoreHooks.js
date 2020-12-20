@@ -18,18 +18,29 @@ export const useDocument = (docPath) => {
 
 export const useCollection = ({ collectionPath, order = null }) => {
 	const [collection, setCollection] = useState([]);
+	const collectionPathRef = firestore.collection(collectionPath);
+	const addDoc = (doc) => {
+		return collectionPathRef.doc().set(doc);
+	};
+	const updateDoc = ({ id, doc }) => {
+		return collectionPathRef.doc(id).set(doc);
+	};
+	const deleteDoc = (id) => {
+		return collectionPathRef.doc(id).delete();
+	};
+
 	useEffect(() => {
-		const ref = order
-			? firestore.collection(collectionPath).orderBy(order)
-			: firestore.collection(collectionPath);
+		const ref = order ? collectionPathRef.orderBy(order) : collectionPathRef;
 		const unSubscribe = ref.onSnapshot((querySnapshot) => {
-			setCollection(querySnapshot?.docs?.map((doc) => doc.data()));
+			setCollection(
+				querySnapshot?.docs?.map((doc) => ({ ...doc.data(), id: doc.id }))
+			);
 		});
 		return () => {
 			unSubscribe();
 		};
 	}, [collectionPath, order]);
-	return collection;
+	return { collection, addDoc, updateDoc, deleteDoc };
 };
 
 export const useAuth = () => {

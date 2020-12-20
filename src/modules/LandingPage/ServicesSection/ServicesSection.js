@@ -11,7 +11,7 @@ import ServicesCard from './ServicesCard';
 import './styles.scss';
 
 const ServiceSection = () => {
-	const services = useCollection({
+	const { collection: services } = useCollection({
 		collectionPath: SERVICES_COLLECTION,
 		order: 'priority',
 	});
@@ -27,7 +27,6 @@ const ServiceSection = () => {
 									return <ServicesCard key={service.name} service={service} />;
 								} else return null;
 							})}
-
 							<Collapse isOpen={showAll}>
 								<Row className='row-grid justify-content-center'>
 									{services.map((service, index) => {

@@ -1,13 +1,6 @@
 import React, { useEffect } from 'react';
-import {
-	Card,
-	CardBody,
-	CardFooter,
-	CardHeader,
-	Modal,
-	Table,
-} from 'reactstrap';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { Card, CardBody, CardFooter, CardHeader, Modal } from 'reactstrap';
+import { useIntl } from 'react-intl';
 import jsPDF from 'jspdf';
 import domtoimage from 'dom-to-image';
 
@@ -15,12 +8,12 @@ import messages from 'i18n/messages.js';
 import { Keyspace } from 'components/Icons';
 import { Month } from 'i18n/util';
 
-import { DateTime } from 'i18n/util';
-import { INR } from 'i18n/util';
+import { DateTime, INR } from 'i18n/util';
 import './styles.scss';
+import BreakUpTable from './BreakUpTable';
 
 const BillDownloadModal = ({ isOpen, onToggle, bill }) => {
-	const { id, paidTimestamp, breakUp, amount, month } = bill;
+	const { id, paidTimestamp, amount, month } = bill;
 	const { formatMessage } = useIntl();
 	const name = 'Saleem Khan';
 	const address =
@@ -91,48 +84,7 @@ const BillDownloadModal = ({ isOpen, onToggle, bill }) => {
 								b: (word) => <span className='bold-font'>{word}</span>,
 							})}
 						</p>
-						<Table className='rent-receipt-card-body-table'>
-							<thead>
-								<tr className='border-bottom'>
-									<th className='rent-receipt-card-list-item bold-font'>
-										{formatMessage(messages.category)}
-									</th>
-									<th className='rent-receipt-card-list-value bold-font'>
-										{formatMessage(messages.billAmount)}
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								{Object.keys(breakUp).map((key, index) => {
-									return (
-										<tr key={key}>
-											<td className='rent-receipt-card-list-item'>
-												{messages[key] ? (
-													formatMessage(messages[key])
-												) : (
-													<FormattedMessage id={key} defaultMessage={key} />
-												)}
-											</td>
-											<td className='rent-receipt-card-list-value'>
-												<INR amount={breakUp[key]} />
-											</td>
-										</tr>
-									);
-								})}
-								<tr className='border-top'>
-									<th
-										scope='row'
-										className='rent-receipt-card-list-item bold-font'>
-										{formatMessage(messages.total)}
-									</th>
-									<th
-										scope='row'
-										className='rent-receipt-card-list-value bold-font'>
-										<INR amount={amount} />
-									</th>
-								</tr>
-							</tbody>
-						</Table>
+						<BreakUpTable bill={bill} />
 					</CardBody>
 					<CardFooter className='bg-white'>
 						<div className='copyright rent-receipt-card-footer'>

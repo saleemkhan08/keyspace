@@ -1,80 +1,71 @@
+import { useCollection } from 'globalState/index.js';
 import React, { useState } from 'react';
 import {
 	Button,
 	PopoverBody,
 	PopoverHeader,
 	UncontrolledPopover,
+	UncontrolledDropdown,
+	DropdownToggle,
+	DropdownMenu,
+	DropdownItem,
 } from 'reactstrap';
 import CreateComplaintModal from './CreateComplaintModal.js';
+import { DateTime } from 'i18n/util';
 import './styles.scss';
 
-const COMPLAINTS_TYPES = Object.freeze({
+export const COMPLAINTS_TYPES = Object.freeze({
 	PLUMBING: 'Plumbing',
 	WASTE_DISPOSAL: 'Waste Disposal',
 	ELECTRICAL: 'Electrical',
 	CARPENTER: 'Carpenter',
 	OTHERS: 'Others',
 });
-
-const STATUS_TYPES = Object.freeze({
-	OPEN: 'Open',
-	WORK_IN_PROGRESS: 'Work In Progress',
-	RESOLVED: 'Resolved',
-	RE_OPEN: 'Reopened',
+export const COMPLAINTS = 'complaints';
+export const STATUS_TYPES_TEXT = Object.freeze({
+	OPEN: {
+		key: 'OPEN',
+		value: 'Open',
+	},
+	WORK_IN_PROGRESS: {
+		key: 'WORK_IN_PROGRESS',
+		value: 'Work In Progress',
+	},
+	RESOLVED: {
+		key: 'RESOLVED',
+		value: 'Resolved',
+	},
+	RE_OPEN: {
+		key: 'RE_OPEN',
+		value: 'Reopened',
+	},
 });
 
-const mockData = [
-	{
-		id: 1001,
-		title: 'Sample complaint1',
-		description:
-			'This is a smaple description to show it in 2 lines. This is a smaple description to show it in 2 lines This is a smaple description to show it in 2 lines. This is a smaple description to show it in 2 lines',
-		status: STATUS_TYPES.OPEN,
-		type: COMPLAINTS_TYPES.OTHERS,
-		createdOn: '23/08/2020',
-	},
-	{
-		id: 1002,
-		title: 'Sample complaint2',
-		description:
-			'This is a smaple description to show it in 2 lines. This is a smaple description to show it in 2 lines This is a smaple description to show it in 2 lines. This is a smaple description to show it in 2 lines',
-		status: STATUS_TYPES.WORK_IN_PROGRESS,
-		type: COMPLAINTS_TYPES.PLUMBING,
-		createdOn: '23/08/2020',
-	},
-	{
-		id: 1003,
-		title: 'Sample complaint3',
-		description:
-			'This is a smaple description to show it in 2 lines. This is a smaple description to show it in 2 lines This is a smaple description to show it in 2 lines. This is a smaple description to show it in 2 lines',
-		status: STATUS_TYPES.RESOLVED,
-		type: COMPLAINTS_TYPES.WASTE_DISPOSAL,
-		createdOn: '23/08/2020',
-	},
-	{
-		id: 1004,
-		title: 'Sample complaint4',
-		description:
-			'This is a smaple description to show it in 2 lines. This is a smaple description to show it in 2 lines This is a smaple description to show it in 2 lines. This is a smaple description to show it in 2 lines',
-		status: STATUS_TYPES.RE_OPEN,
-		type: COMPLAINTS_TYPES.ELECTRICAL,
-		createdOn: '23/08/2020',
-	},
-	{
-		id: 1005,
-		title: 'Sample complaint5',
-		description:
-			'This is a smaple description to show it in 2 lines. This is a smaple description to show it in 2 lines This is a smaple description to show it in 2 lines. This is a smaple description to show it in 2 lines',
-		status: STATUS_TYPES.WORK_IN_PROGRESS,
-		type: COMPLAINTS_TYPES.CARPENTER,
-		createdOn: '23/08/2020',
-	},
+export const STATUS_TYPES_OPEN = [
+	STATUS_TYPES_TEXT.WORK_IN_PROGRESS,
+	STATUS_TYPES_TEXT.RESOLVED,
 ];
+
+export const STATUS_TYPES_WORK_IN_PROGRESS = [STATUS_TYPES_TEXT.RESOLVED];
+export const STATUS_TYPES_RESOLVED = [STATUS_TYPES_TEXT.RE_OPEN];
+export const STATUS_TYPES_RE_OPEN = [
+	STATUS_TYPES_TEXT.WORK_IN_PROGRESS,
+	STATUS_TYPES_TEXT.RESOLVED,
+];
+
+export const STATUS_TYPES = Object.freeze({
+	OPEN: STATUS_TYPES_OPEN,
+	WORK_IN_PROGRESS: STATUS_TYPES_WORK_IN_PROGRESS,
+	RESOLVED: STATUS_TYPES_RESOLVED,
+	RE_OPEN: STATUS_TYPES_RE_OPEN,
+});
 
 const Support = () => {
 	const [showCreatTicketModal, setShowCreatTicketModal] = useState(false);
-	// TODO Fetch data from backend
-	const complaintsList = mockData;
+	const { collection: complaintsList, updateDoc, deleteDoc } = useCollection({
+		collectionPath: COMPLAINTS,
+		order: 'order',
+	});
 	return (
 		<>
 			<div className='support-tab-container'>
@@ -115,16 +106,45 @@ const Support = () => {
 				</div>
 				<div className='support-tab-list-container'>
 					{complaintsList.map((complaint) => (
-						<div key={complaint.id} className='support-tab-list-item-container'>
+						<div
+							key={complaint.id}
+							className={`support-tab-list-item-container ${complaint.status}`}>
 							<h5 className='support-tab-list-item-title'>{complaint.title}</h5>
 							<p className='support-tab-list-item-created-on'>
-								{`Created On : ${complaint.createdOn}`}
+								{`Created On : `}
+								<DateTime timestamp={complaint.createdOn} />
 								{` | Type : ${complaint.type} `}
-								{` | Status : ${complaint.status}`}
+								{` | Status : ${STATUS_TYPES_TEXT[complaint.status]?.value}`}
 							</p>
 							<p className='support-tab-list-item-description'>
 								{complaint.description}
 							</p>
+							{/* TODO provide option to add comments */}
+							<div className='support-tab-list-item-edit-container'>
+								<UncontrolledDropdown>
+									<DropdownToggle caret color='default'>
+										Options
+									</DropdownToggle>
+									<DropdownMenu>
+										{STATUS_TYPES[complaint.status]?.map((status) => {
+											const newComplaint = { ...complaint, status: status.key };
+											return (
+												<DropdownItem
+													key={status.key}
+													onClick={() =>
+														updateDoc({ id: complaint.id, doc: newComplaint })
+													}>
+													{status.value}
+												</DropdownItem>
+											);
+										})}
+										{/* TODO restrict to be deleted only by master user or the person who created it */}
+										<DropdownItem onClick={() => deleteDoc(complaint.id)}>
+											Delete
+										</DropdownItem>
+									</DropdownMenu>
+								</UncontrolledDropdown>
+							</div>
 						</div>
 					))}
 				</div>

@@ -7,7 +7,7 @@ import {
 
 const ChatsModal = ({ isOpen, onToggle }) => {
 	const uid = 'testUid';
-	const chats = useCollection({
+	const { collection: chats } = useCollection({
 		collectionPath: getChatsCollectionPath(uid),
 		order: 'priority',
 	});
