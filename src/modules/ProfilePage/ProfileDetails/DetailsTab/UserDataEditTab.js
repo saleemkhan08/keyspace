@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from 'reactstrap';
+import { Button, Spinner } from 'reactstrap';
 
 import FormInput from 'components/FinalForm/Input';
 import { isEmpty, isValidDate } from 'components/FinalForm/validators';
@@ -7,23 +7,20 @@ import { useForm } from 'react-final-form-hooks';
 import { requiredTextDetails } from './UserDataConfig';
 import './styles.scss';
 
-const UserDataEditTab = ({ updateDoc, userData }) => {
+const UserDataEditTab = ({ updateDoc, userData, isLoading }) => {
 	const [editMode, setEditMode] = useState(false);
 
-	const onSubmit = (values) => {
-		// TODO show loading and await
-		if (!editMode) {
+	const onSubmit = async (values) => {
+		if (!isLoading && !editMode) {
 			updateDoc({
 				...userData,
 				...values,
 			});
 		}
-		// TODO hide loading
 	};
 
 	const validate = (values) => {
 		const errors = {};
-		console.log('Sal values : ', values);
 		if (isEmpty(values.name)) {
 			errors.name = 'Please enter a valid name';
 		}
@@ -39,7 +36,6 @@ const UserDataEditTab = ({ updateDoc, userData }) => {
 		if (isEmpty(values.permanentAddress)) {
 			errors.permanentAddress = 'Please enter a valid permanent address';
 		}
-		console.log('Sal errors : ', errors);
 		return errors;
 	};
 
@@ -59,9 +55,14 @@ const UserDataEditTab = ({ updateDoc, userData }) => {
 						outline
 						size='sm'
 						color='success'
+						disabled={isLoading}
 						type='submit'
 						onClick={() => setEditMode(!editMode)}>
-						<span className='material-icons editSaveBtnIcon'>{iconName}</span>
+						{isLoading ? (
+							<Spinner size='sm' type='grow' />
+						) : (
+							<span className='material-icons editSaveBtnIcon'>{iconName}</span>
+						)}
 					</Button>
 				</div>
 				{requiredTextDetails.map((detail) => (

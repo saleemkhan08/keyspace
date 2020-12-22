@@ -62,6 +62,7 @@ export const requiredImageDetails = [
 		name: 'rentalAgreement',
 		labelTxt: 'Rental Agreement',
 		fallbackImg: rentalAgreement,
+		isDownload: true,
 		description: 'Rental Agreement can be downloaded from here.',
 		placeholder:
 			'Your rental agreement will appear here, when all the details are verified.',

@@ -66,13 +66,37 @@ export const useFileStorage = ({ docPath, fileName, updateDoc, userData }) => {
 
 export const useDocument = (docPath) => {
 	const [data, setData] = useState({});
+	const [isLoading, setIsLoading] = useState(false);
+	const dispatch = useDispatch();
 	const docRef = firestore.doc(docPath);
 
-	const updateDoc = (doc) => {
-		return docRef.set(doc);
+	const updateDoc = async (doc) => {
+		try {
+			setIsLoading(true);
+			await docRef.set(doc);
+		} catch (err) {
+			dispatch(
+				showNotification({
+					message: "Couldn't update the document! Please try again...",
+					type: NotificationTypeEnum.ERROR,
+				})
+			);
+		}
+		setIsLoading(false);
 	};
-	const deleteDoc = (id) => {
-		return docRef.delete();
+	const deleteDoc = async (id) => {
+		try {
+			setIsLoading(true);
+			await docRef.delete();
+		} catch (err) {
+			dispatch(
+				showNotification({
+					message: "Couldn't delete the document! Please try again...",
+					type: NotificationTypeEnum.ERROR,
+				})
+			);
+		}
+		setIsLoading(false);
 	};
 	useEffect(() => {
 		const unSubscribe = docRef.onSnapshot((doc) => {
@@ -84,20 +108,56 @@ export const useDocument = (docPath) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [docPath]);
 
-	return { data, deleteDoc, updateDoc };
+	return { data, deleteDoc, updateDoc, isLoading };
 };
 
 export const useCollection = ({ collectionPath, order = null }) => {
 	const [collection, setCollection] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
 	const collectionPathRef = firestore.collection(collectionPath);
-	const addDoc = (doc) => {
-		return collectionPathRef.doc().set(doc);
+	const dispatch = useDispatch();
+
+	const addDoc = async (doc) => {
+		try {
+			setIsLoading(true);
+			await collectionPathRef.doc().set(doc);
+		} catch (err) {
+			dispatch(
+				showNotification({
+					message: "Couldn't add the document! Please try again...",
+					type: NotificationTypeEnum.ERROR,
+				})
+			);
+		}
+		setIsLoading(false);
 	};
-	const updateDoc = ({ id, doc }) => {
-		return collectionPathRef.doc(id).set(doc);
+	const updateDoc = async ({ id, doc }) => {
+		try {
+			setIsLoading(true);
+			await collectionPathRef.doc(id).set(doc);
+		} catch (err) {
+			dispatch(
+				showNotification({
+					message: "Couldn't update the document! Please try again...",
+					type: NotificationTypeEnum.ERROR,
+				})
+			);
+		}
+		setIsLoading(false);
 	};
-	const deleteDoc = (id) => {
-		return collectionPathRef.doc(id).delete();
+	const deleteDoc = async (id) => {
+		try {
+			setIsLoading(true);
+			await collectionPathRef.doc(id).delete();
+		} catch (err) {
+			dispatch(
+				showNotification({
+					message: "Couldn't delete the document! Please try again...",
+					type: NotificationTypeEnum.ERROR,
+				})
+			);
+		}
+		setIsLoading(false);
 	};
 
 	useEffect(() => {
@@ -112,7 +172,7 @@ export const useCollection = ({ collectionPath, order = null }) => {
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [collectionPath, order]);
-	return { collection, addDoc, updateDoc, deleteDoc };
+	return { collection, addDoc, updateDoc, deleteDoc, isLoading };
 };
 
 export const useAuth = () => {

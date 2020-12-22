@@ -14,6 +14,7 @@ import {
 } from 'reactstrap';
 
 import { ROUTES } from 'modules/routes.js';
+// TODO change to useAuth
 import { auth } from 'globalState/firebase.js';
 import { Keyspace } from 'components/Icons';
 

@@ -34,16 +34,6 @@ const BillDownloadModal = ({ isOpen, onToggle, bill }) => {
 			const width = pdf.internal.pageSize.getWidth();
 			const height = (width / element.clientWidth) * element.clientHeight;
 
-			console.log('SalHeightWidth : ', {
-				clientHeight: element.clientHeight,
-				clientWidth: element.clientWidth,
-			});
-
-			console.log('SalHeightWidth : ', {
-				pdfHeight: height,
-				pdfWidth: width,
-			});
-
 			pdf.addImage(dataUrl, 'JPEG', 0, 0, width, height);
 			pdf.save('download.pdf');
 		});

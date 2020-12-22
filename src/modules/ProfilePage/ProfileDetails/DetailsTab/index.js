@@ -13,7 +13,7 @@ const DetailsTab = () => {
 	const [currentImage, setCurrentImage] = useState({ index: 0, isOpen: false });
 	const currentUser = useAuth();
 	const dataRootPath = `${USER_COLLECTION}/${currentUser?.uid}`;
-	const { data: userData, updateDoc } = useDocument(dataRootPath);
+	const { data: userData, updateDoc, isLoading } = useDocument(dataRootPath);
 
 	const showImgViewer = (isShow, index = 0) => {
 		setCurrentImage({ isOpen: isShow, index });
@@ -26,7 +26,11 @@ const DetailsTab = () => {
 	};
 	return (
 		<div>
-			<UserDataEditTab updateDoc={updateDoc} userData={userData} />
+			<UserDataEditTab
+				updateDoc={updateDoc}
+				userData={userData}
+				isLoading={isLoading}
+			/>
 			<Row className='m-3'>
 				{requiredImageDetails.map((data, index) => (
 					<Col lg='4' md='6' sm='6' xs='12'>

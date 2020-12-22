@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, CardBody, CardHeader, Modal } from 'reactstrap';
+import { Button, Card, CardBody, CardHeader, Modal, Spinner } from 'reactstrap';
 import { useForm } from 'react-final-form-hooks';
 import { COMPLAINTS_TYPES } from './SupportTab';
 import FormInput from 'components/FinalForm/Input';
@@ -10,20 +10,20 @@ import './styles.scss';
 
 const CreateComplaintModal = ({ isOpen, onToggle }) => {
 	const complaintTypeKeys = Object.keys(COMPLAINTS_TYPES);
-	const { addDoc } = useCollection({
+	const { addDoc, isLoading } = useCollection({
 		collectionPath: COMPLAINTS,
 	});
 
-	const onSubmit = (values) => {
-		// TODO show loading and await
-		addDoc({
-			...values,
-			order: -1 * Date.now(),
-			createdOn: Date.now(),
-			status: STATUS_TYPES_TEXT.OPEN.key,
-		});
-		// TODO hide loading
-		onToggle();
+	const onSubmit = async (values) => {
+		if (!isLoading) {
+			await addDoc({
+				...values,
+				order: -1 * Date.now(),
+				createdOn: Date.now(),
+				status: STATUS_TYPES_TEXT.OPEN.key,
+			});
+			onToggle();
+		}
 	};
 
 	const validate = (values) => {
@@ -81,8 +81,8 @@ const CreateComplaintModal = ({ isOpen, onToggle }) => {
 									className='mt-3'
 									color='primary'
 									type='submit'
-									disabled={pristine || submitting}>
-									Save
+									disabled={pristine || submitting || isLoading}>
+									Save {isLoading && <Spinner size='sm' />}
 								</Button>
 							</div>
 						</form>

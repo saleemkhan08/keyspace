@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
-import { Button, Card, CardBody } from 'reactstrap';
+import { Button, Card, CardBody, Spinner } from 'reactstrap';
 import { useFileStorage } from 'globalState/firestoreHooks';
 import Image from 'components/Image';
+import { saveAs } from 'file-saver';
 import './styles.scss';
 
 const UserDataCard = ({ data, onClick, updateDoc, userData, docPath }) => {
@@ -46,13 +47,29 @@ const UserDataCard = ({ data, onClick, updateDoc, userData, docPath }) => {
 					ref={fileRef}
 					onChange={fileInputChangeHandler}
 				/>
-				<Button
-					className='userDataCardAction'
-					color='primary'
-					disabled={uploading}
-					onClick={handleUpdload}>
-					Upload
-				</Button>
+				{data.isDownload ? (
+					<Button
+						className='userDataCardAction'
+						color='primary'
+						disabled={!userData[data.name]}
+						onClick={() => saveAs(userData[data.name])}>
+						Download
+					</Button>
+				) : (
+					<Button
+						className='userDataCardAction'
+						color='primary'
+						disabled={uploading}
+						onClick={handleUpdload}>
+						{uploading ? (
+							<>
+								Uploading &nbsp; <Spinner size='sm' type='grow' />
+							</>
+						) : (
+							'Upload'
+						)}
+					</Button>
+				)}
 			</CardBody>
 		</Card>
 	);

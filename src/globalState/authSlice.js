@@ -8,7 +8,6 @@ export const loginWithGoole = createAsyncThunk(
 			const { user } = await auth.signInWithPopup(
 				new firebase.auth.GoogleAuthProvider()
 			);
-			console.log('salUser : ', { user });
 			return {
 				name: user.displayName,
 				email: user.email,
