@@ -2,7 +2,8 @@ import React from 'react';
 import { Button, Card, CardBody, CardHeader, Modal } from 'reactstrap';
 import { useForm } from 'react-final-form-hooks';
 import { COMPLAINTS_TYPES } from './SupportTab';
-import { isEmpty, Input } from 'components/FinalForm';
+import FormInput from 'components/FinalForm/Input';
+import { isEmpty } from 'components/FinalForm/validators';
 import { useCollection } from 'globalState';
 import { STATUS_TYPES_TEXT, COMPLAINTS } from './SupportTab.js';
 import './styles.scss';
@@ -58,8 +59,8 @@ const CreateComplaintModal = ({ isOpen, onToggle }) => {
 					</CardHeader>
 					<CardBody className='px-lg-4 py-lg-4'>
 						<form onSubmit={handleSubmit}>
-							<Input name='title' form={form} labelTxt='Complaint Title' />
-							<Input
+							<FormInput name='title' form={form} labelTxt='Complaint Title' />
+							<FormInput
 								name='type'
 								form={form}
 								labelTxt='Complaint Type'
@@ -69,7 +70,7 @@ const CreateComplaintModal = ({ isOpen, onToggle }) => {
 									value: key,
 								}))}
 							/>
-							<Input
+							<FormInput
 								name='description'
 								form={form}
 								labelTxt='Description'

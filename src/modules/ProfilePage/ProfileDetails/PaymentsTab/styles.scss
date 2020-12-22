@@ -3,6 +3,7 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
+		align-items: center;
 		.payments-info-icon {
 			margin-left: 5px;
 			cursor: pointer;
@@ -90,4 +91,8 @@
 .border-bottom {
 	margin-top: 5px !important;
 	border-color: #172b4d !important;
+}
+.pay-now-btn {
+	height: 30px;
+	margin-bottom: 5px;
 }

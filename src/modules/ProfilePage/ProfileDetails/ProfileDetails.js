@@ -4,7 +4,7 @@ import { Details, Support, Rupee } from 'components/Icons';
 import { Nav, TabContent, TabPane, Card, CardBody } from 'reactstrap';
 import TabLink from 'components/TabLink/TabLink';
 
-import DetailsTab from './UserDataTab';
+import DetailsTab from './DetailsTab';
 import SupportTab from './SupportTab';
 import Payments from './PaymentsTab';
 
@@ -25,7 +25,7 @@ const detailsList = [
 	},
 ];
 
-const UserDetails = () => {
+const ProfileDetails = () => {
 	const [currentTabIndex, setCurrentTabIndex] = useState(0);
 
 	const updateNavIndex = (event, index) => {
@@ -82,4 +82,4 @@ const UserDetails = () => {
 	);
 };
 
-export default UserDetails;
+export default ProfileDetails;

@@ -1,0 +1,95 @@
+.details-editor-container {
+	margin: 10px;
+}
+.user-details-container {
+	.details-edit-btn-container {
+		display: flex;
+		width: 100%;
+		justify-content: flex-end;
+	}
+}
+
+.user-data-type-image-container {
+	height: 200px;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+}
+.user-data-type-image {
+	padding: 10px;
+	height: 200px;
+}
+
+.userDataCardContainer {
+	border-color: #ccc;
+}
+
+.userDataCardTitle {
+	margin-top: 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2; /* number of lines to show */
+	-webkit-box-orient: vertical;
+}
+
+.user-data-type-text-area {
+	cursor: text;
+}
+.input-group,
+.user-data-type-date {
+	width: 100%;
+}
+
+.textContainer {
+	height: 140px;
+}
+
+.userDataCardDescription {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3; /* number of lines to show */
+	-webkit-box-orient: vertical;
+	margin-bottom: 5px;
+}
+.userDataCardAction {
+	margin-top: 10px;
+}
+.user-details-save-button {
+	width: 100%;
+}
+
+.details-list-item {
+	border-bottom: 0.5px solid #ccc;
+}
+
+.details-list-item-cell {
+	border-left: 0.5px solid #ccc;
+	display: flex;
+	align-items: center;
+}
+
+.disallowEdit {
+	border-top-color: transparent !important;
+	border-right-color: transparent !important;
+	border-left-color: transparent !important;
+	border-radius: 0 !important;
+	background-color: transparent !important;
+}
+
+.editSaveBtn {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+}
+.editSaveBtnIcon {
+	margin-top: 4px;
+	font-size: 18px;
+}
+
+.uploading {
+	opacity: 0.5;
+}

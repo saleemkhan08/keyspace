@@ -1,19 +1,90 @@
 import { useEffect, useState } from 'react';
-import { firestore, auth } from 'globalState/firebase';
+import { firestore, auth, storage } from 'globalState/firebase';
+import {
+	showNotification,
+	NotificationTypeEnum,
+} from 'globalState/notificationSlice';
+import { useDispatch } from 'react-redux';
+
+export const useFileStorage = ({ docPath, fileName, updateDoc, userData }) => {
+	const [error, setError] = useState(null);
+	const dispatch = useDispatch();
+	const [selectedFile, setSelectedFile] = useState();
+	const [uploading, setUploading] = useState(false);
+	const [preview, setPreview] = useState();
+
+	useEffect(() => {
+		if (!selectedFile) {
+			setPreview(undefined);
+			return;
+		}
+		const objectUrl = URL.createObjectURL(selectedFile);
+		setPreview(objectUrl);
+		return () => URL.revokeObjectURL(objectUrl);
+	}, [selectedFile]);
+
+	const fileInputChangeHandler = async (e) => {
+		if (!e.target.files || e.target.files.length === 0) {
+			setSelectedFile(undefined);
+			return;
+		}
+		try {
+			const file = e.target.files[0];
+			setUploading(true);
+			setSelectedFile(file);
+			const fileUploadPath = `${docPath}/${fileName}.${file.name
+				.split('.')
+				.pop()}`;
+			const snapshot = await storage.ref().child(fileUploadPath).put(file);
+			const downloadUrl = await snapshot.ref.getDownloadURL();
+			await updateDoc({ ...userData, [fileName]: downloadUrl });
+			setError(null);
+			dispatch(
+				showNotification({
+					message: `Uploaded`,
+					type: NotificationTypeEnum.SUCCESS,
+				})
+			);
+		} catch (err) {
+			dispatch(
+				showNotification({
+					message: "Couldn't upload! Please try again...",
+					type: NotificationTypeEnum.ERROR,
+				})
+			);
+			setError(err);
+		}
+		setUploading(false);
+	};
+	return {
+		preview,
+		uploading,
+		error,
+		fileInputChangeHandler,
+	};
+};
 
 export const useDocument = (docPath) => {
 	const [data, setData] = useState({});
+	const docRef = firestore.doc(docPath);
+
+	const updateDoc = (doc) => {
+		return docRef.set(doc);
+	};
+	const deleteDoc = (id) => {
+		return docRef.delete();
+	};
 	useEffect(() => {
-		const ref = firestore.doc(docPath);
-		const unSubscribe = ref.onSnapshot((doc) => {
+		const unSubscribe = docRef.onSnapshot((doc) => {
 			setData(doc?.data());
 		});
 		return () => {
 			unSubscribe();
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [docPath]);
 
-	return data;
+	return { data, deleteDoc, updateDoc };
 };
 
 export const useCollection = ({ collectionPath, order = null }) => {
@@ -39,6 +110,7 @@ export const useCollection = ({ collectionPath, order = null }) => {
 		return () => {
 			unSubscribe();
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [collectionPath, order]);
 	return { collection, addDoc, updateDoc, deleteDoc };
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Row, Col } from 'reactstrap';
-
+import { useAuth } from 'globalState/firestoreHooks';
 import FullPageLoading from 'components/FullPageLoading';
 import ProfileDetails from './ProfileDetails';
 
@@ -15,9 +15,12 @@ import Image from 'components/Image';
 
 import './styles.scss';
 
-const ProfilePage = ({ currentUser, isOpen, toggleModal }) => {
+const ProfilePage = () => {
 	const dispatch = useDispatch();
-	const userData = useDocument(`${USER_COLLECTION}/${currentUser?.uid}`);
+	const currentUser = useAuth();
+	const { data: userData } = useDocument(
+		`${USER_COLLECTION}/${currentUser?.uid}`
+	);
 	const handleLogout = () => {
 		dispatch(logout());
 		// redirect to home page
