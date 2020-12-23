@@ -111,7 +111,11 @@ export const useDocument = (docPath) => {
 	return { data, deleteDoc, updateDoc, isLoading };
 };
 
-export const useCollection = ({ collectionPath, order = null }) => {
+export const useCollection = ({
+	collectionPath,
+	order = null,
+	filter = undefined,
+}) => {
 	const [collection, setCollection] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const collectionPathRef = firestore.collection(collectionPath);
@@ -161,7 +165,8 @@ export const useCollection = ({ collectionPath, order = null }) => {
 	};
 
 	useEffect(() => {
-		const ref = order ? collectionPathRef.orderBy(order) : collectionPathRef;
+		const filteredRef = filter ? filter(collectionPathRef) : collectionPathRef;
+		const ref = order ? filteredRef.orderBy(order) : filteredRef;
 		const unSubscribe = ref.onSnapshot((querySnapshot) => {
 			setCollection(
 				querySnapshot?.docs?.map((doc) => ({ ...doc.data(), id: doc.id }))

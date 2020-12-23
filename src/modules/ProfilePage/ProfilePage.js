@@ -55,7 +55,7 @@ const ProfilePage = () => {
 								</div>
 							</div>
 						</Col>
-						<Col className='order-lg-7 align-self-lg-center mr-3 ml-3' lg='8'>
+						<Col className='order-lg-7 mr-3 ml-3' lg='8'>
 							<ProfileDetails />
 						</Col>
 					</Row>

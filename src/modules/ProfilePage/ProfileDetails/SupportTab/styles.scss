@@ -18,10 +18,6 @@
 			border-color: #5e72e4;
 			background-color: #5e72e4;
 		}
-		.create-new-ticket-button {
-			height: 30px;
-			padding: 5px 10px;
-		}
 	}
 	.support-tab-list-container {
 		.support-tab-list-item-container {
@@ -71,4 +67,19 @@
 	border-color: #c54620 !important;
 	border-left: 6px solid #c54620 !important;
 	// color: #c54620 !important;
+}
+
+.create-new-ticket-button {
+	max-height: 30px !important;
+}
+
+.emptyListMessage {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 300px;
+	font-size: 20px;
+	font-weight: bold;
+	color: #ccc;
 }

@@ -4,12 +4,13 @@ import { useForm } from 'react-final-form-hooks';
 import { COMPLAINTS_TYPES } from './SupportTab';
 import FormInput from 'components/FinalForm/Input';
 import { isEmpty } from 'components/FinalForm/validators';
-import { useCollection } from 'globalState';
+import { useCollection, useAuth } from 'globalState/firestoreHooks';
 import { STATUS_TYPES_TEXT, COMPLAINTS } from './SupportTab.js';
 import './styles.scss';
 
 const CreateComplaintModal = ({ isOpen, onToggle }) => {
 	const complaintTypeKeys = Object.keys(COMPLAINTS_TYPES);
+	const currentUser = useAuth();
 	const { addDoc, isLoading } = useCollection({
 		collectionPath: COMPLAINTS,
 	});
@@ -21,6 +22,7 @@ const CreateComplaintModal = ({ isOpen, onToggle }) => {
 				order: -1 * Date.now(),
 				createdOn: Date.now(),
 				status: STATUS_TYPES_TEXT.OPEN.key,
+				uid: currentUser.uid,
 			});
 			onToggle();
 		}

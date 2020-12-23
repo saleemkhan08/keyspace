@@ -13,6 +13,7 @@ import {
 import CreateComplaintModal from './CreateComplaintModal.js';
 import { DateTime } from 'i18n/util';
 import './styles.scss';
+import { useAuth } from 'globalState/index.js';
 
 export const COMPLAINTS_TYPES = Object.freeze({
 	PLUMBING: 'Plumbing',
@@ -62,9 +63,12 @@ export const STATUS_TYPES = Object.freeze({
 
 const Support = () => {
 	const [showCreatTicketModal, setShowCreatTicketModal] = useState(false);
+	const currentUser = useAuth();
 	const { collection: complaintsList, updateDoc, deleteDoc } = useCollection({
 		collectionPath: COMPLAINTS,
 		order: 'order',
+		filter: (ref) =>
+			currentUser.uid ? ref.where('uid', '==', currentUser.uid) : ref,
 	});
 	return (
 		<>
@@ -100,53 +104,63 @@ const Support = () => {
 						className='create-new-ticket-button'
 						outline
 						color='primary'
+						size='sm'
 						onClick={() => setShowCreatTicketModal(true)}>
 						Create New
 					</Button>
 				</div>
 				<div className='support-tab-list-container'>
-					{complaintsList.map((complaint) => (
-						<div
-							key={complaint.id}
-							className={`support-tab-list-item-container ${complaint.status}`}>
-							<h5 className='support-tab-list-item-title'>{complaint.title}</h5>
-							<p className='support-tab-list-item-created-on'>
-								{`Created On : `}
-								<DateTime timestamp={complaint.createdOn} />
-								{` | Type : ${complaint.type} `}
-								{` | Status : ${STATUS_TYPES_TEXT[complaint.status]?.value}`}
-							</p>
-							<p className='support-tab-list-item-description'>
-								{complaint.description}
-							</p>
-							{/* TODO provide option to add comments */}
-							<div className='support-tab-list-item-edit-container'>
-								<UncontrolledDropdown>
-									<DropdownToggle caret color='default' size='sm'>
-										Options
-									</DropdownToggle>
-									<DropdownMenu>
-										{STATUS_TYPES[complaint.status]?.map((status) => {
-											const newComplaint = { ...complaint, status: status.key };
-											return (
-												<DropdownItem
-													key={status.key}
-													onClick={() =>
-														updateDoc({ id: complaint.id, doc: newComplaint })
-													}>
-													{status.value}
-												</DropdownItem>
-											);
-										})}
-										{/* TODO restrict to be deleted only by master user or the person who created it */}
-										<DropdownItem onClick={() => deleteDoc(complaint.id)}>
-											Delete
-										</DropdownItem>
-									</DropdownMenu>
-								</UncontrolledDropdown>
+					{complaintsList?.length ? (
+						complaintsList.map((complaint) => (
+							<div
+								key={complaint.id}
+								className={`support-tab-list-item-container ${complaint.status}`}>
+								<h5 className='support-tab-list-item-title'>
+									{complaint.title}
+								</h5>
+								<p className='support-tab-list-item-created-on'>
+									{`Created On : `}
+									<DateTime timestamp={complaint.createdOn} />
+									{` | Type : ${complaint.type} `}
+									{` | Status : ${STATUS_TYPES_TEXT[complaint.status]?.value}`}
+								</p>
+								<p className='support-tab-list-item-description'>
+									{complaint.description}
+								</p>
+								{/* TODO provide option to add comments */}
+								<div className='support-tab-list-item-edit-container'>
+									<UncontrolledDropdown>
+										<DropdownToggle caret color='default' size='sm'>
+											Options
+										</DropdownToggle>
+										<DropdownMenu>
+											{STATUS_TYPES[complaint.status]?.map((status) => {
+												const newComplaint = {
+													...complaint,
+													status: status.key,
+												};
+												return (
+													<DropdownItem
+														key={status.key}
+														onClick={() =>
+															updateDoc({ id: complaint.id, doc: newComplaint })
+														}>
+														{status.value}
+													</DropdownItem>
+												);
+											})}
+											{/* TODO restrict to be deleted only by master user or the person who created it */}
+											<DropdownItem onClick={() => deleteDoc(complaint.id)}>
+												Delete
+											</DropdownItem>
+										</DropdownMenu>
+									</UncontrolledDropdown>
+								</div>
 							</div>
-						</div>
-					))}
+						))
+					) : (
+						<div className='emptyListMessage'> No Complaints found</div>
+					)}
 				</div>
 			</div>
 			<CreateComplaintModal

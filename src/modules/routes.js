@@ -48,18 +48,22 @@ const Routes = () => {
 							currentPosition={currentPosition}
 						/>
 					</Route>
-					<Route path={ROUTES.PROFILE} exact>
-						<ProfilePage
-							currentUser={currentUser}
-							currentPosition={currentPosition}
-						/>
-					</Route>
-					<Route path={ROUTES.DASHBOARD} exact>
-						<DashboardPage
-							currentUser={currentUser}
-							currentPosition={currentPosition}
-						/>
-					</Route>
+					{currentUser && (
+						<>
+							<Route path={ROUTES.PROFILE} exact>
+								<ProfilePage
+									currentUser={currentUser}
+									currentPosition={currentPosition}
+								/>
+							</Route>
+							<Route path={ROUTES.DASHBOARD} exact>
+								<DashboardPage
+									currentUser={currentUser}
+									currentPosition={currentPosition}
+								/>
+							</Route>
+						</>
+					)}
 					<Redirect to={ROUTES.INDEX} />
 				</Switch>
 				<NotificationModal />
