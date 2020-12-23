@@ -54,17 +54,21 @@
 
 .OPEN {
 	border-color: #205cc5 !important;
+	border-left: 6px solid #205cc5 !important;
 	// color: #205cc5 !important;
 }
 .WORK_IN_PROGRESS {
 	border-color: #c2c520 !important;
+	border-left: 6px solid #c2c520 !important;
 	// color: #c2c520 !important;
 }
 .RESOLVED {
 	border-color: #33c520 !important;
+	border-left: 6px solid #33c520 !important;
 	// color: #33c520 !important;
 }
 .RE_OPEN {
 	border-color: #c54620 !important;
+	border-left: 6px solid #c54620 !important;
 	// color: #c54620 !important;
 }

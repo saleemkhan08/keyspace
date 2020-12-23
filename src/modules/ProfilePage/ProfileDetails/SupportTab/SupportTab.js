@@ -122,7 +122,7 @@ const Support = () => {
 							{/* TODO provide option to add comments */}
 							<div className='support-tab-list-item-edit-container'>
 								<UncontrolledDropdown>
-									<DropdownToggle caret color='default'>
+									<DropdownToggle caret color='default' size='sm'>
 										Options
 									</DropdownToggle>
 									<DropdownMenu>

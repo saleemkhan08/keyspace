@@ -16,6 +16,7 @@ export default ({
 	type = 'text',
 	options,
 	isRow,
+	formGroupClass,
 	...props
 }) => {
 	const {
@@ -39,7 +40,7 @@ export default ({
 		</BootstrapInput>
 	);
 	return (
-		<FormGroup>
+		<FormGroup className={formGroupClass}>
 			{isRow ? (
 				<>
 					<Row className='m-3'>

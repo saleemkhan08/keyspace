@@ -1,25 +1,63 @@
-import React, { useState, useRef, useEffect } from 'react';
-import classnames from 'classnames';
+import React, { useRef, useEffect } from 'react';
+import {
+	showNotification,
+	NotificationTypeEnum,
+} from 'globalState/notificationSlice';
 
 import {
 	Button,
 	Card,
 	CardBody,
-	FormGroup,
-	Input,
-	InputGroupAddon,
-	InputGroupText,
-	InputGroup,
 	Container,
 	Row,
 	Col,
+	Spinner,
 } from 'reactstrap';
 import { ROUTES } from 'modules/routes';
+import { useForm } from 'react-final-form-hooks';
+import FormInput from 'components/FinalForm/Input';
+import { useCollection } from 'globalState/firestoreHooks';
+import config, { validate } from './ContactFormConfig';
 import './styles.scss';
+import { useDispatch } from 'react-redux';
+
+const ENQURIES = 'enquires';
 
 const ContactSection = ({ currentPosition }) => {
-	const [nameFocused, setNameFocused] = useState(false);
-	const [emailFocused, setEmailFocused] = useState(false);
+	const dispatch = useDispatch();
+	const { addDoc, isLoading } = useCollection({
+		collectionPath: ENQURIES,
+	});
+
+	const onSubmit = async (values, form) => {
+		if (!isLoading) {
+			await addDoc({
+				...values,
+				order: -1 * Date.now(),
+				createdOn: Date.now(),
+			});
+
+			dispatch(
+				showNotification({
+					message: 'Message Sent',
+					type: NotificationTypeEnum.SUCCESS,
+				})
+			);
+			setTimeout(() => {
+				form.reset();
+				form.resetFieldState('name');
+				form.resetFieldState('email');
+				form.resetFieldState('mobileNumber');
+				form.resetFieldState('enquiry');
+			});
+		}
+	};
+
+	const { form, handleSubmit, pristine, submitting } = useForm({
+		initialValues: {},
+		onSubmit,
+		validate,
+	});
 
 	const positionRef = useRef(null);
 	useEffect(() => {
@@ -40,74 +78,29 @@ const ContactSection = ({ currentPosition }) => {
 					<Col lg='8'>
 						<Card className='bg-gradient-default shadow'>
 							<CardBody className='p-lg-5 text-white'>
-								<h4 className='mb-1 text-white'>Want to work with us?</h4>
+								<h4 className='mb-1 text-white'>Have any enquiries?</h4>
 								<p className='mt-0 text-white'>
-									Your project is very important to us.
+									Write to us and we'll get back to you as soon as we can...
 								</p>
-								<FormGroup
-									className={classnames('mt-5', {
-										focused: nameFocused,
-									})}>
-									<InputGroup className='input-group-alternative'>
-										<InputGroupAddon addonType='prepend'>
-											<InputGroupText>
-												<i className='ni ni-user-run' />
-											</InputGroupText>
-										</InputGroupAddon>
-										<Input
-											placeholder='Your name'
-											type='text'
-											onFocus={() => {
-												setNameFocused(true);
-											}}
-											onBlur={() => {
-												setNameFocused(false);
-											}}
+								<form onSubmit={handleSubmit}>
+									{config.map((detail) => (
+										<FormInput
+											{...detail}
+											form={form}
+											formGroupClass='contact-form-input-group'
 										/>
-									</InputGroup>
-								</FormGroup>
-								<FormGroup
-									className={classnames({
-										focused: emailFocused,
-									})}>
-									<InputGroup className='input-group-alternative'>
-										<InputGroupAddon addonType='prepend'>
-											<InputGroupText>
-												<i className='ni ni-email-83' />
-											</InputGroupText>
-										</InputGroupAddon>
-										<Input
-											placeholder='Email address'
-											type='email'
-											onFocus={() => {
-												setEmailFocused(true);
-											}}
-											onBlur={() => {
-												setEmailFocused(false);
-											}}
-										/>
-									</InputGroup>
-								</FormGroup>
-								<FormGroup className='mb-4'>
-									<Input
-										className='form-control-alternative'
-										cols='80'
-										name='name'
-										placeholder='Type a message...'
-										rows='4'
-										type='textarea'
-									/>
-								</FormGroup>
-								<div>
+									))}
 									<Button
 										block
-										className='btn-white shadow text-primary text-bold'
+										className='btn-white shadow text-primary text-bold mt-4'
 										color='primary'
 										size='lg'
-										type='button'>
-										Send Message
+										disabled={pristine || submitting || isLoading}
+										type='submit'>
+										Send Message &nbsp;
+										{isLoading && <Spinner size='sm' />}
 									</Button>
-								</div>
+								</form>
 							</CardBody>
 						</Card>
 					</Col>

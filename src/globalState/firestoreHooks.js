@@ -77,7 +77,7 @@ export const useDocument = (docPath) => {
 		} catch (err) {
 			dispatch(
 				showNotification({
-					message: "Couldn't update the document! Please try again...",
+					message: 'Something went wrong! Please try again...',
 					type: NotificationTypeEnum.ERROR,
 				})
 			);
@@ -91,7 +91,7 @@ export const useDocument = (docPath) => {
 		} catch (err) {
 			dispatch(
 				showNotification({
-					message: "Couldn't delete the document! Please try again...",
+					message: 'Something went wrong! Please try again...',
 					type: NotificationTypeEnum.ERROR,
 				})
 			);
@@ -124,7 +124,7 @@ export const useCollection = ({ collectionPath, order = null }) => {
 		} catch (err) {
 			dispatch(
 				showNotification({
-					message: "Couldn't add the document! Please try again...",
+					message: 'Something went wrong! Please try again...',
 					type: NotificationTypeEnum.ERROR,
 				})
 			);
@@ -138,7 +138,7 @@ export const useCollection = ({ collectionPath, order = null }) => {
 		} catch (err) {
 			dispatch(
 				showNotification({
-					message: "Couldn't update the document! Please try again...",
+					message: 'Something went wrong! Please try again...',
 					type: NotificationTypeEnum.ERROR,
 				})
 			);
@@ -152,7 +152,7 @@ export const useCollection = ({ collectionPath, order = null }) => {
 		} catch (err) {
 			dispatch(
 				showNotification({
-					message: "Couldn't delete the document! Please try again...",
+					message: 'Something went wrong! Please try again...',
 					type: NotificationTypeEnum.ERROR,
 				})
 			);
