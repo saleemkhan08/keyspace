@@ -34,9 +34,11 @@ const LandingPageNavbar = ({ onLogin, currentUser, onNavigate }) => {
 			console.log('Salresult : ', { role: result.claims.role });
 		});
 	}, []);
-
+	// TODO find a better way to do this
 	const headerClassName =
-		location.pathname === ROUTES.PROFILE ? 'profile-header' : '';
+		location.pathname === ROUTES.PROFILE || ROUTES.DASHBOARD
+			? 'profile-header'
+			: '';
 	const onExiting = () => {
 		setCollapseClasses('collapsing-out');
 	};
@@ -100,7 +102,10 @@ const LandingPageNavbar = ({ onLogin, currentUser, onNavigate }) => {
 									text='Contact'
 								/>
 								{isLoggedIn ? (
-									<NavItem route={ROUTES.PROFILE} text='Profile' />
+									<>
+										<NavItem route={ROUTES.PROFILE} text='Profile' />
+										<NavItem route={ROUTES.DASHBOARD} text='Dashboard' />
+									</>
 								) : (
 									<NavItem icon='fa fa-google' onClick={onLogin} text='Login' />
 								)}

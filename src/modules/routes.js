@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import LandingPage from 'modules/LandingPage';
 import ProfilePage from 'modules/ProfilePage';
+import DashboardPage from 'modules/DashboardPage';
 import Navbar from 'components/Navbar';
 import Footer from 'components/Footer';
 import NotificationModal from 'components/NotificationModal';
@@ -19,6 +20,7 @@ import 'assets/css/custom-fonts.css';
 export const ROUTES = {
 	INDEX: '/',
 	PROFILE: '/profile',
+	DASHBOARD: '/dashboard',
 	ABOUT: '#about',
 	CONTACT: '#contact',
 };
@@ -48,6 +50,12 @@ const Routes = () => {
 					</Route>
 					<Route path={ROUTES.PROFILE} exact>
 						<ProfilePage
+							currentUser={currentUser}
+							currentPosition={currentPosition}
+						/>
+					</Route>
+					<Route path={ROUTES.DASHBOARD} exact>
+						<DashboardPage
 							currentUser={currentUser}
 							currentPosition={currentPosition}
 						/>
