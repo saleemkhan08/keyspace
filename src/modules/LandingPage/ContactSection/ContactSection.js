@@ -20,8 +20,7 @@ import { useCollection } from 'globalState/firestoreHooks';
 import config, { validate } from './ContactFormConfig';
 import './styles.scss';
 import { useDispatch } from 'react-redux';
-
-const ENQURIES = 'enquires';
+import { ENQURIES } from 'globalState/EnquiriesSlice';
 
 const ContactSection = ({ currentPosition }) => {
 	const dispatch = useDispatch();

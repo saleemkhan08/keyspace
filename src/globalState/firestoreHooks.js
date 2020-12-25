@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { firestore, auth, storage } from 'globalState/firebase';
 import {
 	showNotification,
@@ -116,9 +116,11 @@ export const useCollection = ({
 	order = null,
 	filter = undefined,
 }) => {
+	const options = useRef({ order: null, filter: null });
 	const [collection, setCollection] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const collectionPathRef = firestore.collection(collectionPath);
+
 	const dispatch = useDispatch();
 
 	const addDoc = async (doc) => {
@@ -165,18 +167,31 @@ export const useCollection = ({
 	};
 
 	useEffect(() => {
-		const filteredRef = filter ? filter(collectionPathRef) : collectionPathRef;
+		const filteredRef =
+			filter?.field && filter?.operator && filter?.value
+				? collectionPathRef.where(filter.field, filter.operator, filter.value)
+				: collectionPathRef;
+
 		const ref = order ? filteredRef.orderBy(order) : filteredRef;
-		const unSubscribe = ref.onSnapshot((querySnapshot) => {
-			setCollection(
-				querySnapshot?.docs?.map((doc) => ({ ...doc.data(), id: doc.id }))
-			);
-		});
-		return () => {
-			unSubscribe();
-		};
+		if (
+			options.current.order !== order ||
+			options.current.filter?.field !== filter?.field ||
+			options.current.filter?.operator !== filter?.operator ||
+			options.current.filter?.value !== filter?.value
+		) {
+			options.current.order = order;
+			options.current.filter = filter;
+			const unSubscribe = ref.onSnapshot((querySnapshot) => {
+				setCollection(
+					querySnapshot?.docs?.map((doc) => ({ ...doc.data(), id: doc.id }))
+				);
+			});
+			return () => {
+				unSubscribe();
+			};
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [collectionPath, order]);
+	}, [collectionPath, order, filter?.field, filter?.operator, filter?.value]);
 	return { collection, addDoc, updateDoc, deleteDoc, isLoading };
 };
 

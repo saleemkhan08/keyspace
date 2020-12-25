@@ -1,11 +1,14 @@
 import React from 'react';
 import { Button, Card, CardBody, CardHeader, Modal, Spinner } from 'reactstrap';
 import { useForm } from 'react-final-form-hooks';
-import { COMPLAINTS_TYPES } from './SupportTab';
+import {
+	COMPLAINTS_TYPES,
+	STATUS_TYPES_TEXT,
+	COMPLAINTS,
+} from 'globalState/ComplaintSlice.js';
 import FormInput from 'components/FinalForm/Input';
 import { isEmpty } from 'components/FinalForm/validators';
 import { useCollection, useAuth } from 'globalState/firestoreHooks';
-import { STATUS_TYPES_TEXT, COMPLAINTS } from './SupportTab.js';
 import './styles.scss';
 
 const CreateComplaintModal = ({ isOpen, onToggle }) => {
