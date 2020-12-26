@@ -12,8 +12,8 @@ import { USER_COLLECTION } from 'globalState/authSlice';
 const DetailsTab = () => {
 	const [currentImage, setCurrentImage] = useState({ index: 0, isOpen: false });
 	const currentUser = useAuth();
-	const dataRootPath = `${USER_COLLECTION}/${currentUser?.uid}`;
-	const { data: userData, updateDoc, isLoading } = useDocument(dataRootPath);
+	const docPath = `${USER_COLLECTION}/${currentUser?.uid}`;
+	const { data: userData, updateDoc, isLoading } = useDocument(docPath);
 
 	const showImgViewer = (isShow, index = 0) => {
 		setCurrentImage({ isOpen: isShow, index });
@@ -41,7 +41,7 @@ const DetailsTab = () => {
 							onClick={() => showImgViewer(true, index)}
 							updateDoc={updateDoc}
 							userData={userData}
-							dataRootPath={dataRootPath}
+							docPath={docPath}
 						/>
 					</Col>
 				))}

@@ -6,7 +6,13 @@ import {
 } from 'globalState/notificationSlice';
 import { useDispatch } from 'react-redux';
 
-export const useFileStorage = ({ docPath, fileName, updateDoc, userData }) => {
+export const useFileStorage = ({
+	docPath,
+	fileName,
+	updateDoc,
+	updateCollectionDoc,
+	recordData,
+}) => {
 	const [error, setError] = useState(null);
 	const dispatch = useDispatch();
 	const [selectedFile, setSelectedFile] = useState();
@@ -32,12 +38,27 @@ export const useFileStorage = ({ docPath, fileName, updateDoc, userData }) => {
 			const file = e.target.files[0];
 			setUploading(true);
 			setSelectedFile(file);
-			const fileUploadPath = `${docPath}/${fileName}.${file.name
-				.split('.')
-				.pop()}`;
+
+			const fileUploadPath = fileName
+				? `${docPath}/${fileName}.${file.name.split('.').pop()}`
+				: `${docPath}/${file.name}`;
+			console.log('Salresult : ', { fileUploadPath });
 			const snapshot = await storage.ref().child(fileUploadPath).put(file);
+			console.log('Salresult : ', { snapshot });
 			const downloadUrl = await snapshot.ref.getDownloadURL();
-			await updateDoc({ ...userData, [fileName]: downloadUrl });
+			console.log('Salresult : ', { downloadUrl });
+			if (updateDoc) {
+				console.log('Salresult : ', { updateDoc });
+				await updateDoc({ ...recordData, [fileName]: downloadUrl });
+			}
+			if (updateCollectionDoc) {
+				console.log('Salresult : ', { updateCollectionDoc });
+				await updateCollectionDoc({
+					id: recordData.id,
+					doc: { ...recordData, [fileName]: downloadUrl },
+				});
+			}
+
 			setError(null);
 			dispatch(
 				showNotification({
@@ -46,6 +67,7 @@ export const useFileStorage = ({ docPath, fileName, updateDoc, userData }) => {
 				})
 			);
 		} catch (err) {
+			console.log('Salerr : ', { err });
 			dispatch(
 				showNotification({
 					message: "Couldn't upload! Please try again...",
@@ -75,6 +97,7 @@ export const useDocument = (docPath) => {
 			setIsLoading(true);
 			await docRef.set(doc);
 		} catch (err) {
+			console.log('Salerr : ', { err });
 			dispatch(
 				showNotification({
 					message: 'Something went wrong! Please try again...',
@@ -89,6 +112,7 @@ export const useDocument = (docPath) => {
 			setIsLoading(true);
 			await docRef.delete();
 		} catch (err) {
+			console.log('Salerr : ', { err });
 			dispatch(
 				showNotification({
 					message: 'Something went wrong! Please try again...',
@@ -128,6 +152,7 @@ export const useCollection = ({
 			setIsLoading(true);
 			await collectionPathRef.doc().set(doc);
 		} catch (err) {
+			console.log('Salerr : ', { err });
 			dispatch(
 				showNotification({
 					message: 'Something went wrong! Please try again...',
@@ -142,6 +167,7 @@ export const useCollection = ({
 			setIsLoading(true);
 			await collectionPathRef.doc(id).set(doc);
 		} catch (err) {
+			console.log('Salerr : ', { err });
 			dispatch(
 				showNotification({
 					message: 'Something went wrong! Please try again...',
@@ -156,6 +182,7 @@ export const useCollection = ({
 			setIsLoading(true);
 			await collectionPathRef.doc(id).delete();
 		} catch (err) {
+			console.log('Salerr : ', { err });
 			dispatch(
 				showNotification({
 					message: 'Something went wrong! Please try again...',

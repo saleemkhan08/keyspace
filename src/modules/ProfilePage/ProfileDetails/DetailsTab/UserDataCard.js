@@ -10,7 +10,7 @@ const UserDataCard = ({ data, onClick, updateDoc, userData, docPath }) => {
 		docPath,
 		fileName: data.name,
 		updateDoc,
-		userData,
+		recordData: userData,
 	});
 
 	const fileRef = useRef();

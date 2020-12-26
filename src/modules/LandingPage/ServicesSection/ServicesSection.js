@@ -5,15 +5,14 @@ import { Button, Container, Row, Col, Collapse } from 'reactstrap';
 
 import { SERVICES_COLLECTION } from 'globalState/servicesSlice';
 import { useCollection } from 'globalState/firestoreHooks';
+import ServicesCard from 'modules/Components/ServicesCard';
 
-// TODO move this to components
-import ServicesCard from './ServicesCard';
 import './styles.scss';
 
 const ServiceSection = () => {
 	const { collection: services } = useCollection({
 		collectionPath: SERVICES_COLLECTION,
-		order: 'priority',
+		order: 'order',
 	});
 	const [showAll, setLoadAll] = useState(false);
 	return (
