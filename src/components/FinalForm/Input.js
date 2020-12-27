@@ -12,10 +12,11 @@ import {
 export default ({
 	name,
 	form,
-	labelTxt,
+	label,
 	type = 'text',
 	options,
 	isRow,
+	isCheckbox,
 	formGroupClass,
 	...props
 }) => {
@@ -31,6 +32,7 @@ export default ({
 			{...props}
 			type={type}
 			invalid={isValid}
+			checked={isCheckbox && input.value}
 			id={name}>
 			{options?.map(({ value, label }) => (
 				<option key={value} value={value}>
@@ -39,13 +41,24 @@ export default ({
 			))}
 		</BootstrapInput>
 	);
+	if (isCheckbox) {
+		return (
+			<FormGroup check className={formGroupClass}>
+				<Label check>
+					{inputComponent}
+					&nbsp;{label}
+					<FormFeedback invalid={isValid}>{error}</FormFeedback>
+				</Label>
+			</FormGroup>
+		);
+	}
 	return (
 		<FormGroup className={formGroupClass}>
 			{isRow ? (
 				<>
 					<Row className='m-3'>
 						<Col lg='3'>
-							<h5>{labelTxt}</h5>
+							<h5>{label}</h5>
 						</Col>
 						<Col lg='9'>
 							{inputComponent}
@@ -55,7 +68,7 @@ export default ({
 				</>
 			) : (
 				<>
-					<Label for={name}>{labelTxt}</Label>
+					<Label for={name}>{label}</Label>
 					{inputComponent}
 					<FormFeedback invalid={isValid}>{error}</FormFeedback>
 				</>

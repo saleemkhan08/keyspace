@@ -1,6 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import firebase, { firestore, auth } from 'globalState/firebase';
 
+export const UsersTypes = [
+	{ role: 'owner', title: 'Owner' },
+	{ role: 'tenant', title: 'Tenants' },
+	{ role: 'user', title: 'New Users' },
+];
+
+export const EmployeeTypes = [
+	{ role: 'admin', title: 'Admins' },
+	{ role: 'employee', title: 'Employee' },
+	{ role: 'associate', title: 'Associates' },
+];
+
+export const AllUserTypes = [...EmployeeTypes, ...UsersTypes];
+
 export const loginWithGoole = createAsyncThunk(
 	'users/loginWithGoogle',
 	async (_, thunkAPI) => {
@@ -93,3 +107,59 @@ export const authSlice = createSlice({
 });
 export const { logout, redirectComplete } = authSlice.actions;
 export default authSlice.reducer;
+
+export const updateRole = 'updateRole';
+export const generateBill = 'generateBill';
+export const paymentReminder = 'paymentReminder';
+export const acknowledgePayment = 'acknowledgePayment';
+export const subscriptions = 'subscriptions';
+export const flatsAssignment = 'flatsAssignment';
+export const payStatement = 'payStatement';
+export const propertiesAssignment = 'propertiesAssignment';
+export const servicesAssignment = 'servicesAssignment';
+export const modulesAccess = 'modulesAccess';
+
+export const COMMON_OPTIONS = [
+	{ key: 'updateRole', value: 'Update role' },
+	{ key: 'generateBill', value: 'Generate bill' },
+	{ key: 'paymentReminder', value: 'Payment Reminder' },
+	{
+		key: 'acknowledgePayment',
+		value: 'Acknowledge payment',
+	},
+	{ key: 'subscriptions', value: 'Subscriptions' },
+];
+export const TENANT_OPTIONS = [
+	{ key: 'flatsAssignment', value: 'Flats Assignment' },
+];
+export const OWNER_OPTIONS = [
+	{ key: 'payStatement', value: 'Pay Statement' },
+	{ key: 'propertiesAssignment', value: 'Properties Assignment' },
+];
+
+export const ASSOCIATES_OPTIONS = [
+	{ key: 'payStatement', value: 'Pay Statement' },
+	{ key: 'servicesAssignment', value: 'Services Assignment' },
+];
+
+export const EMPLOYEES_OPTIONS = [
+	{ key: 'payStatement', value: 'Pay Statement' },
+	{ key: 'modulesAccess', value: 'Module Access' },
+];
+
+export const OPTIONS_ROLE_MAP = {
+	tenant: TENANT_OPTIONS,
+	owner: OWNER_OPTIONS,
+	associate: ASSOCIATES_OPTIONS,
+	employee: EMPLOYEES_OPTIONS,
+};
+
+export const getOptions = (roles) => {
+	const options = [...COMMON_OPTIONS];
+	for (const role of roles) {
+		if (OPTIONS_ROLE_MAP[role]?.length) {
+			options.push(...OPTIONS_ROLE_MAP[role]);
+		}
+	}
+	return options;
+};

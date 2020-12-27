@@ -51,7 +51,7 @@ const DetailsTab = () => {
 					rightArrowTitle='Next Image'
 					imgs={requiredImageDetails.map((data) => ({
 						src: data.fallbackImg,
-						caption: `${data.labelTxt} : ${data.description}`,
+						caption: `${data.label} : ${data.description}`,
 					}))}
 					currImg={currentImage.index}
 					isOpen={currentImage.isOpen}

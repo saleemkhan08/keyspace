@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import UsersTab from './UsersTab.js';
-import PropertiesTab from './PropertiesTab.js';
-import ServicesTab from './ServicesTab.js';
+import PropertiesTab from './PropertiesTab/PropertiesTab.js';
+import ServicesTab from './ServicesTab/ServicesTab.js';
 import ComplaintsTab from './ComplaintsTab.js';
 import EnquiriesTab from './EnquiriesTab.js';
 import './styles.scss';
+import SubscriptionsTab from './SubscriptionsTab.js';
 
 const navigationList = [
 	{ id: 'users', name: 'Users', icon: 'group' },
+	{ id: 'employees', name: 'Employees', icon: 'admin_panel_settings' },
+	{ id: 'subscriptions', name: 'Subscriptions', icon: 'repeat' },
 	{ id: 'properties', name: 'Properties', icon: 'business' },
 	{ id: 'services', name: 'Services', icon: 'build' },
 	{ id: 'complaints', name: 'Complaints', icon: 'chat' },
@@ -20,6 +23,14 @@ const DashboardPage = () => {
 	switch (pageId) {
 		case 'users': {
 			page = <UsersTab />;
+			break;
+		}
+		case 'employees': {
+			page = <UsersTab showEmployees />;
+			break;
+		}
+		case 'subscriptions': {
+			page = <SubscriptionsTab />;
 			break;
 		}
 		case 'properties': {

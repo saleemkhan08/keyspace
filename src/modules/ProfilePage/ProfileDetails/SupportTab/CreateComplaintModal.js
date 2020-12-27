@@ -64,11 +64,11 @@ const CreateComplaintModal = ({ isOpen, onToggle }) => {
 					</CardHeader>
 					<CardBody className='px-lg-4 py-lg-4'>
 						<form onSubmit={handleSubmit}>
-							<FormInput name='title' form={form} labelTxt='Complaint Title' />
+							<FormInput name='title' form={form} label='Complaint Title' />
 							<FormInput
 								name='type'
 								form={form}
-								labelTxt='Complaint Type'
+								label='Complaint Type'
 								type='select'
 								options={complaintTypeKeys.map((key) => ({
 									label: COMPLAINTS_TYPES[key],
@@ -78,7 +78,7 @@ const CreateComplaintModal = ({ isOpen, onToggle }) => {
 							<FormInput
 								name='description'
 								form={form}
-								labelTxt='Description'
+								label='Description'
 								type='textarea'
 							/>
 							<div className='text-center'>

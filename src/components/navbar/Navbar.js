@@ -26,17 +26,26 @@ const LandingPageNavbar = ({ onLogin, currentUser, onNavigate }) => {
 	const [openCollapse, setOpenCollapse] = useState(false);
 	const isLoggedIn = !!currentUser;
 	const location = useLocation();
+	const [isEmployee, setIsEmployee] = useState(false);
+
 	useEffect(() => {
 		let headroom = new Headroom(document.getElementById('navbar-main'));
 		// initialise
 		headroom.init();
-		auth.currentUser?.getIdTokenResult()?.then((result) => {
-			console.log('Salresult : ', { role: result.claims.role });
-		});
 	}, []);
+	useEffect(() => {
+		auth.currentUser?.getIdTokenResult()?.then((result) => {
+			setIsEmployee(
+				result.claims.roles?.includes('employee') ||
+					result.claims.roles?.includes('admin')
+			);
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [auth.currentUser]);
 	// TODO find a better way to do this
 	const headerClassName =
-		location.pathname === ROUTES.PROFILE || ROUTES.DASHBOARD
+		location.pathname === ROUTES.PROFILE ||
+		location.pathname === ROUTES.DASHBOARD
 			? 'profile-header'
 			: '';
 	const onExiting = () => {
@@ -104,7 +113,9 @@ const LandingPageNavbar = ({ onLogin, currentUser, onNavigate }) => {
 								{isLoggedIn ? (
 									<>
 										<NavItem route={ROUTES.PROFILE} text='Profile' />
-										<NavItem route={ROUTES.DASHBOARD} text='Dashboard' />
+										{isEmployee && (
+											<NavItem route={ROUTES.DASHBOARD} text='Dashboard' />
+										)}
 									</>
 								) : (
 									<NavItem icon='fa fa-google' onClick={onLogin} text='Login' />

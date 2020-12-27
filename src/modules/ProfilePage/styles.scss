@@ -15,8 +15,33 @@
 		top: 0;
 		bottom: 0;
 
-		.profile-image {
+		.profile-image-container {
+			width: 180px;
 			height: 180px;
+			border-radius: 50% !important;
+			background-color: #fff;
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: contain;
+			display: flex;
+			align-items: flex-end;
+			overflow: hidden;
+			.profile-image-action-container {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background-color: #000;
+				opacity: 0.5;
+				height: 25%;
+				width: 100%;
+				cursor: pointer;
+				color: #ccc;
+				transition: all 0.3s;
+			}
+			.profile-image-action-container:hover {
+				opacity: 0.8;
+				color: #fff;
+			}
 		}
 
 		.user-name-email-container {
@@ -61,4 +86,8 @@
 			}
 		}
 	}
+}
+.disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
 }

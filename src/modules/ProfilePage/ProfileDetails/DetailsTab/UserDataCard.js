@@ -28,14 +28,14 @@ const UserDataCard = ({ data, onClick, updateDoc, userData, docPath }) => {
 						className={`user-data-type-image ${uploading && 'uploading'}`}
 						id={data.name}
 						src={imgSrc}
-						alt={data.labelTxt}
+						alt={data.label}
 						fallbackSrc={data.fallbackImg}
 						onClick={onClick}
 					/>
 				</div>
 				<div className='textContainer'>
 					<h5 className='text-primary text-uppercase userDataCardTitle'>
-						{data.labelTxt}
+						{data.label}
 					</h5>
 					<p className='userDataCardDescription'>
 						{userData[data.name] ? data.description : data.placeholder}

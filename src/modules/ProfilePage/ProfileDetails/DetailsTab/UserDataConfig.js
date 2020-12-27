@@ -3,20 +3,20 @@ import { rentalAgreement, idProof, govtAddressProof } from 'assets/img/icons';
 export const requiredTextDetails = [
 	{
 		className: 'user-data-type-text',
-		labelTxt: 'Full Name',
+		label: 'Full Name',
 		name: 'name',
 		type: 'text',
 		placeholder: 'Fullname as per GOVT proof',
 	},
 	{
-		labelTxt: 'Date of Birth',
+		label: 'Date of Birth',
 		name: 'dateOfBirth',
 		type: 'date',
 		placeholder: 'Date of birth as per GOVT proof',
 		className: 'user-data-type-date',
 	},
 	{
-		labelTxt: 'Mobile Number',
+		label: 'Mobile Number',
 		name: 'mobileNumber',
 		type: 'tel',
 		placeholder: 'Your mobile number',
@@ -24,7 +24,7 @@ export const requiredTextDetails = [
 	},
 	{
 		className: 'user-data-type-text-area',
-		labelTxt: 'Office / College Address',
+		label: 'Office / College Address',
 		name: 'officialAddress',
 		type: 'textarea',
 		rows: '2',
@@ -34,7 +34,7 @@ export const requiredTextDetails = [
 	},
 	{
 		className: 'user-data-type-text-area',
-		labelTxt: 'Permanent Address',
+		label: 'Permanent Address',
 		name: 'permanentAddress',
 		type: 'textarea',
 		rows: '2',
@@ -45,14 +45,14 @@ export const requiredTextDetails = [
 
 export const requiredImageDetails = [
 	{
-		labelTxt: 'Government Address proof',
+		label: 'Government Address proof',
 		name: 'govtAddrproof',
 		placeholder: 'Please upload your government address proof',
 		description: 'To verify your address for security purpose',
 		fallbackImg: govtAddressProof,
 	},
 	{
-		labelTxt: 'Office / College ID proof',
+		label: 'Office / College ID proof',
 		name: 'officeCollegeProof',
 		placeholder: 'Please upload your Office or College ID proof',
 		description: 'To validate that you have a stable income to pay the rent',
@@ -60,7 +60,7 @@ export const requiredImageDetails = [
 	},
 	{
 		name: 'rentalAgreement',
-		labelTxt: 'Rental Agreement',
+		label: 'Rental Agreement',
 		fallbackImg: rentalAgreement,
 		isDownload: true,
 		description: 'Rental Agreement can be downloaded from here.',
