@@ -8,6 +8,8 @@ import {
 	Row,
 	Col,
 } from 'reactstrap';
+import WeekDays from './WeekDays';
+import TimeRange from './TimeRange';
 
 export default ({
 	name,
@@ -18,6 +20,7 @@ export default ({
 	isRow,
 	isCheckbox,
 	formGroupClass,
+	formLabelClass,
 	...props
 }) => {
 	const {
@@ -26,7 +29,7 @@ export default ({
 	} = useField(name, form);
 
 	const isValid = (error && touched) || submitError;
-	const inputComponent = (
+	let inputComponent = (
 		<BootstrapInput
 			{...input}
 			{...props}
@@ -41,14 +44,22 @@ export default ({
 			))}
 		</BootstrapInput>
 	);
+
+	if (type === 'weekDays') {
+		inputComponent = <WeekDays {...input} {...props} />;
+	}
+	// if (type === 'timeRange') {
+	// 	inputComponent = <TimeRange {...input} {...props} />;
+	// }
+
 	if (isCheckbox) {
 		return (
 			<FormGroup check className={formGroupClass}>
-				<Label check>
-					{inputComponent}
-					&nbsp;{label}
-					<FormFeedback invalid={isValid}>{error}</FormFeedback>
+				<Label check for={name}>
+					{label}
 				</Label>
+				{inputComponent}
+				<FormFeedback invalid={isValid}>{error}</FormFeedback>
 			</FormGroup>
 		);
 	}

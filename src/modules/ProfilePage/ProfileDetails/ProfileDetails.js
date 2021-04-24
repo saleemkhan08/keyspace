@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Details, Support, Rupee } from 'components/Icons';
+import { Details, Support, Rupee, Repeat } from 'components/Icons';
 // reactstrap components
 import { Nav, TabContent, TabPane, Card, CardBody } from 'reactstrap';
 import TabLink from 'components/TabLink/TabLink';
@@ -7,6 +7,7 @@ import TabLink from 'components/TabLink/TabLink';
 import DetailsTab from './DetailsTab';
 import SupportTab from './SupportTab';
 import Payments from './PaymentsTab';
+import SubscriptionsTab from './SubscriptionsTab';
 
 import './styles.scss';
 
@@ -18,6 +19,10 @@ const detailsList = [
 	{
 		name: 'Support',
 		icon: Support,
+	},
+	{
+		name: 'Subscriptions',
+		icon: Repeat,
 	},
 	{
 		name: 'Payments',
@@ -73,6 +78,9 @@ const ProfileDetails = () => {
 							<SupportTab />
 						</TabPane>
 						<TabPane tabId='tabs2'>
+							<SubscriptionsTab />
+						</TabPane>
+						<TabPane tabId='tabs3'>
 							<Payments />
 						</TabPane>
 					</TabContent>
